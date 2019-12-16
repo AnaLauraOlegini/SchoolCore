@@ -1,4 +1,4 @@
-package com.totvs.sl.school.core.turma.domain.model;
+package com.totvs.sl.school.core.disciplina.domain.model;
 
 import javax.validation.constraints.NotNull;
 
@@ -12,26 +12,26 @@ import lombok.NoArgsConstructor;
 @Getter
 @Aggregate
 @NoArgsConstructor
-public class Turma {
+public class Disciplina {
 
     @NotNull
     @AggregateIdentifier
-    private TurmaId id;
+    private DisciplinaId id;
 
     @NotNull
     private String descricao;
 
-    private int anoLetivo;
-    private int periodoLetivo;
-    private int numeroVagas;
+    @NotNull
+    private String sigla;
+
+    private int cargaHoraria;
 
     @Builder
-    public Turma(TurmaId id, String descricao, int anoLetivo, int periodoLetivo, int numeroVagas) {
+    public Disciplina(DisciplinaId id, String descricao, String sigla, int cargaHoraria) {
         this.id = id;
         this.descricao = descricao;
-        this.anoLetivo = anoLetivo;
-        this.periodoLetivo = periodoLetivo;
-        this.numeroVagas = numeroVagas;
+        this.sigla = sigla;
+        this.cargaHoraria = cargaHoraria;
     }
 
 }

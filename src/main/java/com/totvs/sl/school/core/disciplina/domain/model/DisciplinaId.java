@@ -1,4 +1,4 @@
-package com.totvs.sl.school.core.turma.domain.model;
+package com.totvs.sl.school.core.disciplina.domain.model;
 
 import java.util.UUID;
 
@@ -11,17 +11,17 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode
 @Getter
 @NoArgsConstructor
-public class TurmaId {
-    
+public class DisciplinaId {
+
     private UUID id;
 
-    private TurmaId(UUID id) {
+    private DisciplinaId(UUID id) {
         Assert.notNull(id, "O ID não deve ser nulo.");
         this.id = id;
     }
 
-    public static TurmaId generate() {
-        return new TurmaId(UUID.randomUUID());
+    public static DisciplinaId generate() {
+        return new DisciplinaId(UUID.randomUUID());
     }
 
     @Override
