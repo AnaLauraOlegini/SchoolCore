@@ -1,0 +1,324 @@
+# https://docs.spring.io/spring-boot/docs/current/reference/html/common-application-properties.html#common-application-properties
+management:
+  endpoint:
+    health:
+      enabled: true
+    info:
+      enabled: false
+    metrics:
+      enabled: false
+    prometheus:
+      enabled: true
+  endpoints:
+    web:
+      base-path: /_/
+      exposure:
+        include: "*"
+# 
+# Configuracao padrao
+#
+
+spring:
+
+  profiles:
+    active:
+    - prod
+
+  application:
+    name: school-core
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/school-core
+    username: postgres
+    password: totvs@123
+  
+  flyway:
+    enabled: false
+    migrate: true
+    locations: classpath:db/migration
+    # Only TOTVS Tenant (94d73469-6861-46a8-96b3-1abf272e3983)
+    schemas: B56EFB27_13BB_4767_8227_77ABD3761023
+    baselineOnMigrate: true
+    
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQL95Dialect
+    hibernate:
+      naming:
+        implicit-strategy: org.springframework.boot.orm.jpa.hibernate.SpringImplicitNamingStrategy
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    properties:      
+      hibernate:
+        jdbc:
+          lob:
+            non_contextual_creation: true # https://github.com/spring-projects/spring-boot/issues/12007
+        hbm2ddl:
+          auto: "none"
+        show_sql: true
+        format_sql: true
+       
+  cloud:
+    stream:
+      defaultBinder: rabbit1
+      bindings:
+        rac-input:
+          destination: RAC.Outgoing
+          group: school-core
+          binder: rabbit2
+        school-input-events:       
+          destination: school-exchange
+          group: school-core
+          binder: rabbit1
+        school-output-events:
+          destination: school-exchange
+          binder: rabbit1
+        tjf-messaging-error-input:
+          destination: school-core-errors
+          group: school-core-errors
+        tjf-messaging-error-output:
+          destination: school-core-errors
+          group: school-core-errors
+          producer:
+            requiredGroups: school-core-errors
+      rabbit:
+        bindings:
+          rac-input:
+            consumer:
+              exchange-type: fanout
+      binders:
+        rabbit1:
+          type: rabbit
+          defaultCandidate: false
+          inheritEnvironment: false
+          environment:
+            spring:
+              rabbitmq:
+                host: ${HOSTRABBIT1}
+                port: 5672
+                username: ${USERNAMERABBIT1}
+                password: ${PASSWORDRABBIT1}
+                connection-timeout: 10000
+                virtualHost: /
+        rabbit2:
+          type: rabbit
+          defaultCandidate: false
+          inheritEnvironment: false
+          environment:
+            spring:
+              rabbitmq:
+                host: ${HOSTRABBIT2}
+                port: 5672
+                username: ${USERNAMERABBIT2}
+                password: ${PASSWORDRABBIT2}
+                connection-timeout: 10000
+                virtualHost: /
+               
+security:
+  oauth2:    
+    resource:
+      id: 'authorization_api'
+      jwk:
+        key-set-uri: https://totvs.rac.dev.totvs.io/totvs.rac/.well-known/openid-configuration/jwks
+
+school:
+  swagger:
+    enabled: true
+    host: https://totvs.logistica.totvs.app/school/core
+    oauth2:
+      client-id: yms_swagger
+      client-secret: totvs@123
+      auth-server: https://totvs.rac.dev.totvs.io/totvs.rac
+         
+---
+# 
+# Perfil para testes locais
+#
+
+spring:
+
+  profiles: local
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/school-core
+    username: postgres
+    password: totvs@123
+ 
+  flyway:
+    # Only TOTVS Tenant (94d73469-6861-46a8-96b3-1abf272e3983)
+    schemas: B56EFB27_13BB_4767_8227_77ABD3761023
+    
+  jpa:
+    generate-ddl: true
+    show-sql: true
+    properties:      
+      hibernate:
+        format_sql: true
+        show_sql: true
+
+  cloud:
+    stream:
+      binders:
+        rabbit1:
+          type: rabbit
+          defaultCandidate: false
+          inheritEnvironment: false
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+        rabbit2:
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+server:
+  port: 8282
+
+---
+
+# 
+# Perfil para testes
+#
+
+spring:
+
+  profiles: test
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/school-core
+    username: postgres
+    password: totvs@123
+
+  flyway:
+    # Only TOTVS Tenant (94d73469-6861-46a8-96b3-1abf272e3983)
+    schemas: B56EFB27_13BB_4767_8227_77ABD3761023
+    
+  cloud:
+    stream:
+      binders:
+        rabbit1:
+          type: rabbit
+          defaultCandidate: false
+          inheritEnvironment: false
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+        rabbit2:
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+         
+security:
+  access:
+    api:
+      permissions-uri: http://admin.rac.totvs.com.br/totvs.rac/api/permissions
+  oauth2:    
+    resource:
+      id: 'authorization_api'
+      jwk:
+        key-set-uri: http://admin.rac.totvs.com.br/totvs.rac/.well-known/openid-configuration/jwks
+
+---
+# 
+# Profile to production
+#
+
+spring:
+  profiles: prod
+
+server:
+  servlet:
+    context-path: /school/core
+
+---
+# 
+# Perfil desenvolvimento
+#
+
+spring:
+
+  profiles: dev
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/school-core
+    username: postgres
+    password: totvs@123
+    
+  flyway:
+    enabled: false
+    migrate: true
+    locations: classpath:db/migration
+    # Only TOTVS Tenant (94d73469-6861-46a8-96b3-1abf272e3983)
+    schemas: B56EFB27_13BB_4767_8227_77ABD3761023
+    baselineOnMigrate: true  
+
+  jpa:
+    show-sql: true
+    properties:      
+      hibernate:
+        format_sql: true
+        show_sql: true
+        hbm2ddl:
+          auto: "none"
+
+  cloud:
+    stream:
+      default-binder: rabbit1
+      bindings:        rac-input:
+          destination: local-RAC.Outgoing
+          group: core
+          binder: rabbit2
+        school-input-events:       
+          destination: school-exchange
+          group: school-core
+          binder: rabbit1
+        school-output-events:
+          destination: school-exchange
+          binder: rabbit2
+        tjf-messaging-error-output:
+          destination: school-exchange
+          group: errors
+          producer:
+            requiredGroups: errors  
+      rabbit:
+        bindings:
+          rac-input:
+            consumer:
+              exchange-type: fanout
+      binders:
+        rabbit1:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+        rabbit2:
+          type: rabbit
+          environment:
+            spring:
+              rabbitmq:
+                host: localhost
+                port: 5672
+                username: guest
+                password: guest
+                
+
+server:
+  port: 8282

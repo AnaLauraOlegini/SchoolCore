@@ -1,0 +1,12 @@
+{"properties": [
+    {
+      "name": "spring.flyway.migrate",
+      "type": "com.totvs.sl.school.FlyWayProperties",
+      "description": "Propriedades para o FlyWay"
+    },
+    {
+      "name": "school",
+      "type": "com.totvs.sl.school.SchoolProperties",
+      "description": "Propriedades do serviço do school"
+    }
+  ]}
