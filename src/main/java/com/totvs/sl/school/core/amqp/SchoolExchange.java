@@ -5,9 +5,9 @@ import org.springframework.messaging.MessageChannel;
 
 public interface SchoolExchange {
 
-    public static final String OUTPUT = "school-output-events";
+	public static final String OUTPUT = "school-output-events";
 
-    @Output(SchoolExchange.OUTPUT)
-    MessageChannel output();
+	@Output(SchoolExchange.OUTPUT)
+	MessageChannel output();
 
 }

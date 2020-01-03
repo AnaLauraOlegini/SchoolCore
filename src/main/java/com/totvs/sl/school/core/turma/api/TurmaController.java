@@ -30,31 +30,36 @@ import io.swagger.annotations.ApiResponses;
 @ApiGuideline(ApiGuidelineVersion.v1)
 public class TurmaController {
 
-    public static final String PATH = "/api/v1/turmas";
+	public static final String PATH = "/api/v1/turmas";
 
-    @Autowired
-    private TurmaApplicationService service;
+	@Autowired
+	private TurmaApplicationService service;
 
-    @Autowired
-    private ValidatorService validador;
+	@Autowired
+	private ValidatorService validador;
 
-    @ApiOperation(value = "Criar Turma.", httpMethod = "POST", consumes = APPLICATION_JSON_VALUE)
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Turma criado."),
-            @ApiResponse(code = 400, message = "A turma não pode ser criado porque está em um estado inválido.") })
-    @PostMapping
-    ResponseEntity<Void> criar(@RequestBody CriarTurmaCommandDto dto) {
+	@ApiOperation(value = "Criar Turma.", httpMethod = "POST", consumes = APPLICATION_JSON_VALUE)
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Turma criado."),
+	        @ApiResponse(code = 400, message = "A turma não pode ser criado porque está em um estado inválido.") })
+	@PostMapping
+	ResponseEntity<Void> criar(@RequestBody CriarTurmaCommandDto dto) {
 
-        validador.validate(dto).ifPresent(violations -> {
-            throw new SchoolCriarTurmaException(violations);
-        });
+		validador.validate(dto).ifPresent(violations -> { throw new SchoolCriarTurmaException(violations); });
 
-        var cmd = CriarTurmaCommand.of(dto.getDescricao(), dto.getAnoLetivo(), dto.getPeriodoLetivo(),
-                dto.getNumeroVagas(), dto.getDisciplinaId(), dto.getAlunoId());
-        
-        TurmaId id = service.handle(cmd);
+		var cmd = CriarTurmaCommand.of(dto.getDescricao(),
+		                               dto.getAnoLetivo(),
+		                               dto.getPeriodoLetivo(),
+		                               dto.getNumeroVagas(),
+		                               dto.getDisciplinaId(),
+		                               dto.getAlunoId());
 
-        return ResponseEntity
-                .created(ServletUriComponentsBuilder.fromCurrentRequest().path("/").path(id.toString()).build().toUri())
-                .build();
-    }
+		TurmaId id = service.handle(cmd);
+
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
+		                                                         .path("/")
+		                                                         .path(id.toString())
+		                                                         .build()
+		                                                         .toUri())
+		                     .build();
+	}
 }

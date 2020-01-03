@@ -17,21 +17,22 @@ import com.totvs.tjf.repository.aggregate.CrudAggregateRepository;
 public class ProfessorRepository extends CrudAggregateRepository<Professor, String>
         implements ProfessorDomainRepository {
 
-    public ProfessorRepository(EntityManager em, ObjectMapper mapper) {
-        super(em, mapper.copy());
-    }
+	public ProfessorRepository(EntityManager em, ObjectMapper mapper) {
+		super(em, mapper.copy());
+	}
 
-    protected String getTableName() {
-        return "professor";
-    }
-    
-    @Override
-    public boolean cpfDoProfessorExiste(String cpf) {
-        return this.exists("data->'cpf'->>'numero' = ?", new SqlParameterValue(Types.VARCHAR, cpf));
-    }
+	protected String getTableName() {
+		return "professor";
+	}
 
-    @Override
-    public Optional<Professor> getByCpf(String cpf) {
-        return this.findOne("data->'cpf'->>'numero' = ?", new SqlParameterValue(Types.VARCHAR, cpf));
-    }
+	@Override
+	public boolean cpfDoProfessorExiste(String cpf) {
+		return this.exists("data->'cpf'->>'numero' = ?", new SqlParameterValue(Types.VARCHAR, cpf));
+	}
+
+	@Override
+	public Optional<Professor> getByCpf(String cpf) {
+		return this.findOne("data->'cpf'->>'numero' = ?", new SqlParameterValue(Types.VARCHAR, cpf));
+	}
+
 }

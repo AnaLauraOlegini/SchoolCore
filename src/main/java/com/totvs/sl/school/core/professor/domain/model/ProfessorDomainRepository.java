@@ -6,8 +6,8 @@ import com.totvs.tjf.repository.aggregate.AggregateRepository;
 
 public interface ProfessorDomainRepository extends AggregateRepository<Professor, String> {
 
-    boolean cpfDoProfessorExiste(String cpf);
+	boolean cpfDoProfessorExiste(String cpf);
 
-    Optional<Professor> getByCpf(String cpf);
+	Optional<Professor> getByCpf(String cpf);
 
 }

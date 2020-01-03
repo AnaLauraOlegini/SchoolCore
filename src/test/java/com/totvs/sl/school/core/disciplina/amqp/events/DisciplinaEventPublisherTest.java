@@ -24,45 +24,44 @@ import com.totvs.sl.school.core.amqp.SchoolExchange;
 import com.totvs.sl.school.core.disciplina.application.CriarDisciplinaCommand;
 import com.totvs.sl.school.core.disciplina.application.DisciplinaApplicationService;
 
-
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "test")
 @SpringBootTest(classes = SchoolCoreApplication.class)
 @Transactional
 public class DisciplinaEventPublisherTest {
-   
-    @MockBean
-    private SchoolExchange processor;
 
-    @Autowired
-    private DisciplinaApplicationService disciplinaApplicationService;
+	@MockBean
+	private SchoolExchange processor;
 
-    @Before
-    public void setup() {
-        TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
-        Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
-    }
+	@Autowired
+	private DisciplinaApplicationService disciplinaApplicationService;
 
-    @Test
-    public void deveCriarAluno() {
+	@Before
+	public void setup() {
+		TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
+		Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
+	}
 
-        var cmd = CriarDisciplinaCommand.of( Fabrica.disciplinaDescricao1,  
-                Fabrica.disciplinaSigla1,  
-                Fabrica.disciplinaCargaHoraria1,
-                Fabrica.umProfessorParaUmaDisciplina());
+	@Test
+	public void deveCriarAluno() {
 
-        disciplinaApplicationService.handle(cmd);
+		var cmd = CriarDisciplinaCommand.of(Fabrica.disciplinaDescricao1,
+		                                    Fabrica.disciplinaSigla1,
+		                                    Fabrica.disciplinaCargaHoraria1,
+		                                    Fabrica.umProfessorParaUmaDisciplina());
 
-        ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
-        verify(processor.output()).send(argument.capture());
+		disciplinaApplicationService.handle(cmd);
 
-        DisciplinaCriadaEvent payLoad = TestUtils.getMessagePayLoad(argument, DisciplinaCriadaEvent.class);
-        
-        assertThat(payLoad.getDisciplinaId()).isNotBlank();
-        assertThat(payLoad.getDescricao()).isEqualTo(Fabrica.disciplinaDescricao1);
-        assertThat(payLoad.getSigla()).isEqualTo(Fabrica.disciplinaSigla1);
-        assertThat(payLoad.getCargaHoraria()).isEqualTo(Fabrica.disciplinaCargaHoraria1);
-        assertThat(payLoad.getProfessorId()).size().isEqualTo(1);
+		ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
+		verify(processor.output()).send(argument.capture());
 
-    }     
+		DisciplinaCriadaEvent payLoad = TestUtils.getMessagePayLoad(argument, DisciplinaCriadaEvent.class);
+
+		assertThat(payLoad.getDisciplinaId()).isNotBlank();
+		assertThat(payLoad.getDescricao()).isEqualTo(Fabrica.disciplinaDescricao1);
+		assertThat(payLoad.getSigla()).isEqualTo(Fabrica.disciplinaSigla1);
+		assertThat(payLoad.getCargaHoraria()).isEqualTo(Fabrica.disciplinaCargaHoraria1);
+		assertThat(payLoad.getProfessorId()).size().isEqualTo(1);
+
+	}
 }

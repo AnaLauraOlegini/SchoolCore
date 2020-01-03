@@ -19,32 +19,38 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Turma {
 
-    @NotNull
-    @AggregateIdentifier
-    private TurmaId id;
+	@NotNull
+	@AggregateIdentifier
+	private TurmaId id;
 
-    @NotNull
-    private String descricao;
+	@NotNull
+	private String descricao;
 
-    private int anoLetivo;
-    
-    private int periodoLetivo;
-    
-    private int numeroVagas;
-    
-    private List<AlunoId> alunoId = new ArrayList<>();
-    
-    private List<DisciplinaId> disciplinaId = new ArrayList<>();
+	private int anoLetivo;
 
-    @Builder
-    public Turma(TurmaId id, String descricao, int anoLetivo, int periodoLetivo, int numeroVagas, List<AlunoId> alunoId, List<DisciplinaId> disciplinaId) {
-        this.id = id;
-        this.descricao = descricao;
-        this.anoLetivo = anoLetivo;
-        this.periodoLetivo = periodoLetivo;
-        this.numeroVagas = numeroVagas;
-        this.disciplinaId = disciplinaId;
-        this.alunoId = alunoId;
-    }
+	private int periodoLetivo;
+
+	private int numeroVagas;
+
+	private List<AlunoId> alunoId = new ArrayList<>();
+
+	private List<DisciplinaId> disciplinaId = new ArrayList<>();
+
+	@Builder
+	public Turma(TurmaId id,
+	             String descricao,
+	             int anoLetivo,
+	             int periodoLetivo,
+	             int numeroVagas,
+	             List<AlunoId> alunoId,
+	             List<DisciplinaId> disciplinaId) {
+		this.id = id;
+		this.descricao = descricao;
+		this.anoLetivo = anoLetivo;
+		this.periodoLetivo = periodoLetivo;
+		this.numeroVagas = numeroVagas;
+		this.disciplinaId = disciplinaId;
+		this.alunoId = alunoId;
+	}
 
 }

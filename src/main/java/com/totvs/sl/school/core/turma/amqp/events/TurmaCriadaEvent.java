@@ -18,20 +18,20 @@ import lombok.ToString;
 @ToString
 public class TurmaCriadaEvent {
 
-    public static final transient String NAME = "TurmaCriadaEvent";
-    
-    private String turmaId;
-    
-    private String descricao;
-    
-    private int anoLetivo;
-    
-    private int periodoLetivo;
-    
-    private int numeroVagas;
-    
-    private List<DisciplinaId> disciplinaId;
-    
-    private List<AlunoId> alunoId;
-    
+	public static final transient String NAME = "TurmaCriadaEvent";
+
+	private String turmaId;
+
+	private String descricao;
+
+	private int anoLetivo;
+
+	private int periodoLetivo;
+
+	private int numeroVagas;
+
+	private List<DisciplinaId> disciplinaId;
+
+	private List<AlunoId> alunoId;
+
 }

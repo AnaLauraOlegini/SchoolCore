@@ -12,17 +12,16 @@ import lombok.Getter;
 @AllArgsConstructor
 public class CriarTurmaCommandDto {
 
-    private String descricao;
-    
-    private int anoLetivo;
-    
-    private int periodoLetivo;
-    
-    private int numeroVagas;
-    
-    private List<DisciplinaId> disciplinaId;
-    
-    private List<AlunoId> alunoId;
-    
-    
+	private String descricao;
+
+	private int anoLetivo;
+
+	private int periodoLetivo;
+
+	private int numeroVagas;
+
+	private List<DisciplinaId> disciplinaId;
+
+	private List<AlunoId> alunoId;
+
 }

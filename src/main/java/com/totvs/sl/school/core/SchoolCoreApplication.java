@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 @EnableConfigurationProperties({ SchoolProperties.class, FlyWayProperties.class })
 public class SchoolCoreApplication {
 
-    public static void main(String[] args) {
-        SpringApplication.run(SchoolCoreApplication.class, args);
-    }
+	public static void main(String[] args) {
+		SpringApplication.run(SchoolCoreApplication.class, args);
+	}
 }

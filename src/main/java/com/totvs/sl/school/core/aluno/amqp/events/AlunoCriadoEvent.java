@@ -14,23 +14,23 @@ import lombok.ToString;
 @ToString
 public final class AlunoCriadoEvent {
 
-    public static final transient String NAME = "AlunoCriadoEvent";
+	public static final transient String NAME = "AlunoCriadoEvent";
 
-    @NonNull
-    private String alunoId;
-    
-    @NonNull
-    private String nome;
-    
-    @NonNull
-    private String cpf;
-    
-    @NonNull
-    private String email;
-    
-    @NonNull
-    private String formaIngresso;
+	@NonNull
+	private String alunoId;
 
-    private int matricula;
+	@NonNull
+	private String nome;
+
+	@NonNull
+	private String cpf;
+
+	@NonNull
+	private String email;
+
+	@NonNull
+	private String formaIngresso;
+
+	private int matricula;
 
 }

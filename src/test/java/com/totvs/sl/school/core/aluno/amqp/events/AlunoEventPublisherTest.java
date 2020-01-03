@@ -30,43 +30,43 @@ import com.totvs.sl.school.core.pessoa.domain.CPF;
 @Transactional
 public class AlunoEventPublisherTest {
 
-    @MockBean
-    private SchoolExchange processor;
+	@MockBean
+	private SchoolExchange processor;
 
-    @Autowired
-    private AlunoApplicationService alunoApplicationService;
+	@Autowired
+	private AlunoApplicationService alunoApplicationService;
 
-    @Before
-    public void setup() {
-        TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
-        Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
-    }
+	@Before
+	public void setup() {
+		TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
+		Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
+	}
 
-    @Test
-    public void deveCriarAluno() {
+	@Test
+	public void deveCriarAluno() {
 
-        var nome = "Sophia Tânia Sueli da Conceição";
-        var cpf = "02131505906";
-        var email = "sophiataniasuelidaconceicao@hotmail.com.br";
-        var formaIngresso = "ENADE";
-        var matricula = 876543210;
+		var nome = "Sophia Tânia Sueli da Conceição";
+		var cpf = "02131505906";
+		var email = "sophiataniasuelidaconceicao@hotmail.com.br";
+		var formaIngresso = "ENADE";
+		var matricula = 876543210;
 
-        var cmd = CriarAlunoCommand.of(nome, CPF.of(cpf), email, formaIngresso, matricula);
+		var cmd = CriarAlunoCommand.of(nome, CPF.of(cpf), email, formaIngresso, matricula);
 
-        alunoApplicationService.handle(cmd);
+		alunoApplicationService.handle(cmd);
 
-        ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
-        verify(processor.output()).send(argument.capture());
+		ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
+		verify(processor.output()).send(argument.capture());
 
-        AlunoCriadoEvent payLoad = TestUtils.getMessagePayLoad(argument, AlunoCriadoEvent.class);
+		AlunoCriadoEvent payLoad = TestUtils.getMessagePayLoad(argument, AlunoCriadoEvent.class);
 
-        assertThat(payLoad.getAlunoId()).isNotBlank();
-        assertThat(payLoad.getNome()).isEqualTo("Sophia Tânia Sueli da Conceição");
-        assertThat(payLoad.getCpf()).isEqualTo("02131505906");
-        assertThat(payLoad.getEmail()).isEqualTo("sophiataniasuelidaconceicao@hotmail.com.br");
-        assertThat(payLoad.getFormaIngresso()).isEqualTo("ENADE");
-        assertThat(payLoad.getMatricula()).isEqualTo(876543210);
+		assertThat(payLoad.getAlunoId()).isNotBlank();
+		assertThat(payLoad.getNome()).isEqualTo("Sophia Tânia Sueli da Conceição");
+		assertThat(payLoad.getCpf()).isEqualTo("02131505906");
+		assertThat(payLoad.getEmail()).isEqualTo("sophiataniasuelidaconceicao@hotmail.com.br");
+		assertThat(payLoad.getFormaIngresso()).isEqualTo("ENADE");
+		assertThat(payLoad.getMatricula()).isEqualTo(876543210);
 
-    }
+	}
 
 }

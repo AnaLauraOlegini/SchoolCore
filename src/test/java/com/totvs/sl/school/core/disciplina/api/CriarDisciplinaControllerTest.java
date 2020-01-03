@@ -31,33 +31,34 @@ import com.totvs.tjf.mock.test.RacEmulator;
 @AutoConfigureMockMvc
 public class CriarDisciplinaControllerTest {
 
-    @Autowired
-    private MockMvc mock;
+	@Autowired
+	private MockMvc mock;
 
-    @Autowired
-    private DisciplinaDomainRepository disciplinaDomainRepository;
+	@Autowired
+	private DisciplinaDomainRepository disciplinaDomainRepository;
 
-    @BeforeClass
-    public static void beforeClass() {
-        TestUtils.setAuthentication("B56EFB27_13BB_4767_8227_77ABD3761023");
-        MockHttpServer.getInstance();
-    }
+	@BeforeClass
+	public static void beforeClass() {
+		TestUtils.setAuthentication("B56EFB27_13BB_4767_8227_77ABD3761023");
+		MockHttpServer.getInstance();
+	}
 
-    private String jwt = RacEmulator.getInstance().generateJWT("user", "");
+	private String jwt = RacEmulator.getInstance().generateJWT("user", "");
 
-    @Test
-    public void deveCriarDisciplina() throws Exception {
+	@Test
+	public void deveCriarDisciplina() throws Exception {
 
-        var dto = new CriarDisciplinaCommandDto(Fabrica.disciplinaDescricao2,
-                Fabrica.disciplinaSigla2, Fabrica.disciplinaCargaHoraria2, Fabrica.maisDeUmProfessorParaUmaDisciplina());
-                
-        this.mock
-                .perform(request(HttpMethod.POST, DisciplinaController.PATH)
-                        .header(HEADER_STRING, jwt)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(TestUtils.objectToJson(dto)))
-                .andExpect(status().is2xxSuccessful());
+		var dto = new CriarDisciplinaDto(Fabrica.disciplinaDescricao2,
+		                                 Fabrica.disciplinaSigla2,
+		                                 Fabrica.disciplinaCargaHoraria2,
+		                                 Fabrica.maisDeUmProfessorParaUmaDisciplina());
 
-    }
-    
+		this.mock.perform(request(HttpMethod.POST,
+		                          DisciplinaController.PATH).header(HEADER_STRING, jwt)
+		                                                    .contentType(MediaType.APPLICATION_JSON_VALUE)
+		                                                    .content(TestUtils.objectToJson(dto)))
+		         .andExpect(status().is2xxSuccessful());
+
+	}
+
 }

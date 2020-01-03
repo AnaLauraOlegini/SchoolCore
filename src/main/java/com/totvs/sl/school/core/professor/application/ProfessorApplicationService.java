@@ -18,34 +18,34 @@ public class ProfessorApplicationService {
 
 	@Autowired
 	private ProfessorDomainRepository professorRepository;
-	
+
 	@Autowired
 	private SchoolPublisher schoolPublisher;
-	
+
 	public ProfessorId handle(CriarProfessorCommand cmd) {
-		
-	    Professor professor = Professor.builder()
-	            .id(ProfessorId.generate())
-	            .cpf(cmd.getCpf())
-                .nome(cmd.getNome())
-                .email(cmd.getEmail())
-                .titulacao(cmd.getTitulacao())
-                .build();
-	            
-	   if (this.professorRepository.cpfDoProfessorExiste(cmd.getCpf().getNumero()))
+
+		Professor professor = Professor.builder()
+		                               .id(ProfessorId.generate())
+		                               .cpf(cmd.getCpf())
+		                               .nome(cmd.getNome())
+		                               .email(cmd.getEmail())
+		                               .titulacao(cmd.getTitulacao())
+		                               .build();
+
+		if (this.professorRepository.cpfDoProfessorExiste(cmd.getCpf().getNumero()))
 			throw new SchoolCpfDoProfessorDuplicadoException(cmd.getCpf().getNumero());
-		
+
 		this.professorRepository.insert(professor);
-        		
+
 		schoolPublisher.publish(ProfessorCriadoEvent.builder()
-								.professorId(professor.getId().toString())
-								.nome(professor.getNome())
-								.cpf(professor.getCpf().getNumero())
-								.email(professor.getEmail())
-								.titulacao(professor.getTitulacao())
-								.build());
-		
+		                                            .professorId(professor.getId().toString())
+		                                            .nome(professor.getNome())
+		                                            .cpf(professor.getCpf().getNumero())
+		                                            .email(professor.getEmail())
+		                                            .titulacao(professor.getTitulacao())
+		                                            .build());
+
 		return professor.getId();
-		
+
 	}
 }

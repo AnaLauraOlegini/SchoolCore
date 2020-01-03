@@ -12,16 +12,16 @@ import lombok.Getter;
 @Data(staticConstructor = "of")
 public class CriarTurmaCommand {
 
-    private final String descricao;
-    
-    private final int anoLetivo;
-    
-    private final int periodoLetivo;
-    
-    private final int numeroVagas;
-    
-    private final List<DisciplinaId> disciplinaId;
-    
-    private final List<AlunoId> alunoId;
-    
+	private final String descricao;
+
+	private final int anoLetivo;
+
+	private final int periodoLetivo;
+
+	private final int numeroVagas;
+
+	private final List<DisciplinaId> disciplinaId;
+
+	private final List<AlunoId> alunoId;
+
 }

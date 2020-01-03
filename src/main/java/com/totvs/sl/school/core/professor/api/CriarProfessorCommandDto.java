@@ -9,11 +9,11 @@ import lombok.Getter;
 @ApiModel(description = "Informações para cadastro de um novo professor.")
 public class CriarProfessorCommandDto {
 
-    private String nome;
+	private String nome;
 
-    private String cpf;
+	private String cpf;
 
-    private String email;
+	private String email;
 
-    private String titulacao;
+	private String titulacao;
 }

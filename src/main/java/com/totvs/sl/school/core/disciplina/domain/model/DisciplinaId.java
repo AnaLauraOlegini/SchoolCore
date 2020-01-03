@@ -13,19 +13,19 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class DisciplinaId {
 
-    private UUID id;
+	private UUID id;
 
-    private DisciplinaId(UUID id) {
-        Assert.notNull(id, "O ID não deve ser nulo.");
-        this.id = id;
-    }
+	private DisciplinaId(UUID id) {
+		Assert.notNull(id, "O ID não deve ser nulo.");
+		this.id = id;
+	}
 
-    public static DisciplinaId generate() {
-        return new DisciplinaId(UUID.randomUUID());
-    }
+	public static DisciplinaId generate() {
+		return new DisciplinaId(UUID.randomUUID());
+	}
 
-    @Override
-    public String toString() {
-        return id.toString();
-    }
+	@Override
+	public String toString() {
+		return id.toString();
+	}
 }

@@ -13,9 +13,9 @@ public class SchoolCpfDoAlunoDuplicadoException extends RuntimeException {
 
 	@ApiErrorParameter
 	private String cpf;
-	
+
 	public SchoolCpfDoAlunoDuplicadoException(String cpf) {
 		this.cpf = cpf;
 	}
-	
+
 }

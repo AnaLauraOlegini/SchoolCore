@@ -9,13 +9,13 @@ import lombok.Getter;
 @ApiModel(description = "Informações para cadastro de um novo aluno.")
 public class CriarAlunoCommandDto {
 
-    private String nome;
+	private String nome;
 
-    private String cpf;
+	private String cpf;
 
-    private String email;
+	private String email;
 
-    private String formaIngresso;
+	private String formaIngresso;
 
-    private int matricula;
+	private int matricula;
 }

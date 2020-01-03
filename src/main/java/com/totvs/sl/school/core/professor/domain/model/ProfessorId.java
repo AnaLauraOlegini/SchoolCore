@@ -9,24 +9,28 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @EqualsAndHashCode
-@Getter
 @NoArgsConstructor
+@Getter
 public class ProfessorId {
-    
-    private UUID id;
-    
-    private ProfessorId(UUID id) {
-        Assert.notNull(id, "O ID não deve ser nulo.");
-        this.id = id;
-    }
-    
-    public static ProfessorId generate() {
-        return new ProfessorId(UUID.randomUUID());
-    }
-    
-    @Override
-    public String toString() {
-        return id.toString();
-    }
+
+	private UUID id;
+
+	private ProfessorId(UUID id) {
+		Assert.notNull(id, "O ID não deve ser nulo.");
+		this.id = id;
+	}
+
+	public static ProfessorId generate() {
+		return new ProfessorId(UUID.randomUUID());
+	}
+
+	public static ProfessorId from(String id) {
+		return new ProfessorId(UUID.fromString(id));
+	}
+
+	@Override
+	public String toString() {
+		return id.toString();
+	}
 
 }

@@ -30,36 +30,38 @@ import com.totvs.sl.school.core.professor.application.ProfessorApplicationServic
 @Transactional
 public class ProfessorEventPublisherTest {
 
-    @MockBean
-    private SchoolExchange processor;
+	@MockBean
+	private SchoolExchange processor;
 
-    @Autowired
-    private ProfessorApplicationService professorApplicationService;
+	@Autowired
+	private ProfessorApplicationService professorApplicationService;
 
-    @Before
-    public void setup() {
-        TestUtils.setAuthentication("B56EFB27_13BB_4767_8227_77ABD3761023");
-        Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
-    }
+	@Before
+	public void setup() {
+		TestUtils.setAuthentication("B56EFB27_13BB_4767_8227_77ABD3761023");
+		Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
+	}
 
-    @Test
-    public void testeMensagemProfessorCriadoEvent() {
+	@Test
+	public void testeMensagemProfessorCriadoEvent() {
 
-        var cmd = CriarProfessorCommand.of("Patrícia Milena da Cruz", CPF.of("79586911900"),
-                "patriciamilenadacruz_@hotmail.com.br", "Doutora");
+		var cmd = CriarProfessorCommand.of("Patrícia Milena da Cruz",
+		                                   CPF.of("79586911900"),
+		                                   "patriciamilenadacruz_@hotmail.com.br",
+		                                   "Doutora");
 
-        var id = professorApplicationService.handle(cmd);
+		var id = professorApplicationService.handle(cmd);
 
-        ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
-        verify(processor.output()).send(argument.capture());
+		ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
+		verify(processor.output()).send(argument.capture());
 
-        ProfessorCriadoEvent payLoad = TestUtils.getMessagePayLoad(argument, ProfessorCriadoEvent.class);
+		ProfessorCriadoEvent payLoad = TestUtils.getMessagePayLoad(argument, ProfessorCriadoEvent.class);
 
-        assertThat(payLoad.getProfessorId().toString()).isEqualTo(id.toString());
-        assertThat(payLoad.getNome()).isEqualTo("Patrícia Milena da Cruz");
-        assertThat(payLoad.getCpf().toString()).isEqualTo("79586911900");
-        assertThat(payLoad.getEmail().toString()).isEqualTo("patriciamilenadacruz_@hotmail.com.br");
-        assertThat(payLoad.getTitulacao().toString()).isEqualTo("Doutora");
+		assertThat(payLoad.getProfessorId().toString()).isEqualTo(id.toString());
+		assertThat(payLoad.getNome()).isEqualTo("Patrícia Milena da Cruz");
+		assertThat(payLoad.getCpf().toString()).isEqualTo("79586911900");
+		assertThat(payLoad.getEmail().toString()).isEqualTo("patriciamilenadacruz_@hotmail.com.br");
+		assertThat(payLoad.getTitulacao().toString()).isEqualTo("Doutora");
 
-    }
+	}
 }

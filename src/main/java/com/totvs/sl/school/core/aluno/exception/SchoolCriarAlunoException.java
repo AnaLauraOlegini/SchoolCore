@@ -9,11 +9,10 @@ import com.totvs.tjf.api.context.stereotype.error.ApiBadRequest;
 
 @ApiBadRequest("SchoolCriarAlunoException")
 public class SchoolCriarAlunoException extends ConstraintViolationException {
-	
+
 	private static final long serialVersionUID = 7686045486654120992L;
 
 	public SchoolCriarAlunoException(Set<? extends ConstraintViolation<?>> constraintViolations) {
 		super(constraintViolations);
 	}
 }
-

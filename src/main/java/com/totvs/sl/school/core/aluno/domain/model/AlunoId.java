@@ -12,18 +12,18 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class AlunoId {
-	
+
 	private UUID id;
 
 	private AlunoId(UUID id) {
 		Assert.notNull(id, "O ID não deve ser nulo.");
 		this.id = id;
 	}
-	
+
 	public static AlunoId generate() {
 		return new AlunoId(UUID.randomUUID());
 	}
-	
+
 	@Override
 	public String toString() {
 		return id.toString();

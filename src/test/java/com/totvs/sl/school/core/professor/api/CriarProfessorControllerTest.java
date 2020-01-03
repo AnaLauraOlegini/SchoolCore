@@ -36,69 +36,80 @@ import com.totvs.tjf.mock.test.RacEmulator;
 @AutoConfigureMockMvc
 public class CriarProfessorControllerTest {
 
-    @Autowired
-    private MockMvc mock;
+	@Autowired
+	private MockMvc mock;
 
-    // @Autowired
-    private ProfessorDomainRepository professorRepository;
+	// @Autowired
+	private ProfessorDomainRepository professorRepository;
 
-    @BeforeClass
-    public static void beforeClass() {
-        TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
-        MockHttpServer.getInstance();
-    }
+	@BeforeClass
+	public static void beforeClass() {
+		TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
+		MockHttpServer.getInstance();
+	}
 
-    private String jwt = RacEmulator.getInstance().generateJWT("user", "");
+	private String jwt = RacEmulator.getInstance().generateJWT("user", "");
 
-    @Test
-    @Description("Inclusão de Professor OK")
-    public void deveCriarProfessor() throws Exception {
+	@Test
+	@Description("Inclusão de Professor OK")
+	public void deveCriarProfessor() throws Exception {
 
-        var dto = new CriarProfessorCommandDto("Manoel Sérgio da Cunha", "33699891909",
-                "manoelsergiodacunha-84@gmail.com", "PHD");
+		var dto = new CriarProfessorCommandDto("Manoel Sérgio da Cunha",
+		                                       "33699891909",
+		                                       "manoelsergiodacunha-84@gmail.com",
+		                                       "PHD");
 
-        this.mock
-                .perform(request(HttpMethod.POST, ProfessorController.PATH).header(HEADER_STRING, jwt)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE).content(TestUtils.objectToJson(dto)))
-                .andExpect(status().is2xxSuccessful());
-    }
-    
-    @Test
-    @Description("Inclusão de Professor com campos nulos")
-    public void naoDeveCriarProfessorComCamposNulos() throws Exception {
+		this.mock.perform(request(HttpMethod.POST,
+		                          ProfessorController.PATH).header(HEADER_STRING, jwt)
+		                                                   .contentType(MediaType.APPLICATION_JSON_VALUE)
+		                                                   .content(TestUtils.objectToJson(dto)))
+		         .andExpect(status().is2xxSuccessful());
+	}
 
-        var dto = new CriarProfessorCommandDto(null, null, null, null);
+	@Test
+	@Description("Inclusão de Professor com campos nulos")
+	public void naoDeveCriarProfessorComCamposNulos() throws Exception {
 
-        MvcResult result = this.mock
-                .perform(request(HttpMethod.POST, ProfessorController.PATH)
-                        .header(HEADER_STRING, jwt)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE)
-                        .content(TestUtils.objectToJson(dto)))
-                .andExpect(status().isBadRequest()).andReturn();
+		var dto = new CriarProfessorCommandDto(null, null, null, null);
 
-        assertThat(result.getResponse().getContentAsString()).contains("SchoolCpfDeveSerValidoException");
-    }   
-    
+		MvcResult result = this.mock.perform(request(HttpMethod.POST,
+		                                             ProfessorController.PATH).header(HEADER_STRING, jwt)
+		                                                                      .contentType(MediaType.APPLICATION_JSON_VALUE)
+		                                                                      .content(TestUtils.objectToJson(dto)))
+		                            .andExpect(status().isBadRequest())
+		                            .andReturn();
 
-    @Test
-    @Description("Inclusao de Professor com CPF duplicado.")
-    public void naoDeveIncluirProfessorComCpfDuplicado() throws Exception {
+		assertThat(result.getResponse().getContentAsString()).contains("SchoolCpfDeveSerValidoException");
+	}
 
-        Professor professor = Professor.builder().id(ProfessorId.generate()).nome("Beatriz Isadora Mendes")
-                .cpf(CPF.of("59637547800")).email("beatrizisadoramendes_@hotmail.com").titulacao("PHD").build();
+	@Test
+	@Description("Inclusao de Professor com CPF duplicado.")
+	public void naoDeveIncluirProfessorComCpfDuplicado() throws Exception {
 
-        this.professorRepository.insert(professor);
+		Professor professor = Professor.builder()
+		                               .id(ProfessorId.generate())
+		                               .nome("Beatriz Isadora Mendes")
+		                               .cpf(CPF.of("59637547800"))
+		                               .email("beatrizisadoramendes_@hotmail.com")
+		                               .titulacao("PHD")
+		                               .build();
 
-        CriarProfessorCommandDto dto = new CriarProfessorCommandDto("Beatriz Isadora Mendes", "59637547800",
-                "beatrizisadoramendes_@hotmail.com", "PHD");
+		this.professorRepository.insert(professor);
 
-        MvcResult result = this.mock
-                .perform(request(HttpMethod.POST, ProfessorController.PATH).header(HEADER_STRING, jwt)
-                        .contentType(MediaType.APPLICATION_JSON_VALUE).content(TestUtils.objectToJson(dto)))
-                .andExpect(status().isBadRequest()).andReturn();
+		CriarProfessorCommandDto dto = new CriarProfessorCommandDto("Beatriz Isadora Mendes",
+		                                                            "59637547800",
+		                                                            "beatrizisadoramendes_@hotmail.com",
+		                                                            "PHD");
 
-        assertThat(result.getResponse().getContentAsString()).contains("SchoolCpfDoProfessorDuplicadoException");
+		MvcResult result = this.mock.perform(request(HttpMethod.POST,
+		                                             ProfessorController.PATH).header(HEADER_STRING, jwt)
+		                                                                      .contentType(MediaType.APPLICATION_JSON_VALUE)
+		                                                                      .content(TestUtils.objectToJson(dto)))
+		                            .andExpect(status().isBadRequest())
+		                            .andReturn();
 
-    }
+		assertThat(result.getResponse().getContentAsString()).contains("SchoolCpfDoProfessorDuplicadoException");
+
+	}
 
 }

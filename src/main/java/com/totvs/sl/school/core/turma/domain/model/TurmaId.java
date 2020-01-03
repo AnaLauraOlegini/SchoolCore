@@ -12,20 +12,20 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 public class TurmaId {
-    
-    private UUID id;
 
-    private TurmaId(UUID id) {
-        Assert.notNull(id, "O ID não deve ser nulo.");
-        this.id = id;
-    }
+	private UUID id;
 
-    public static TurmaId generate() {
-        return new TurmaId(UUID.randomUUID());
-    }
+	private TurmaId(UUID id) {
+		Assert.notNull(id, "O ID não deve ser nulo.");
+		this.id = id;
+	}
 
-    @Override
-    public String toString() {
-        return id.toString();
-    }
+	public static TurmaId generate() {
+		return new TurmaId(UUID.randomUUID());
+	}
+
+	@Override
+	public String toString() {
+		return id.toString();
+	}
 }

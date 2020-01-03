@@ -10,7 +10,7 @@ public class SchoolCoreApplicationTest {
 
 	@Test
 	public void contextLoads() {
-	    SchoolCoreApplication.main(new String[] { "--spring.profiles.active=local" });
+		SchoolCoreApplication.main(new String[] { "--spring.profiles.active=local" });
 		assertThat(true).isTrue();
 	}
 }

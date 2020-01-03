@@ -2,7 +2,7 @@ package com.totvs.sl.school.core.disciplina.amqp.events;
 
 import java.util.List;
 
-import com.totvs.sl.school.core.professor.domain.model.ProfessorId;
+import com.totvs.sl.school.core.disciplina.domain.enums.Disciplinas;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -17,15 +17,15 @@ import lombok.ToString;
 @ToString
 public class DisciplinaCriadaEvent {
 
-    public static final transient String NAME = "DisciplinaCriadaEvent";
-    
-    private String disciplinaId;
-    
-    private String descricao;
-    
-    private String sigla;
-    
-    private int cargaHoraria;
-    
-    private List<ProfessorId> professorId;
+	public static final transient String NAME = "DisciplinaCriadaEvent";
+
+	private String disciplinaId;
+
+	private String descricao;
+
+	private Disciplinas sigla;
+
+	private int cargaHoraria;
+
+	private List<String> professorId;
 }

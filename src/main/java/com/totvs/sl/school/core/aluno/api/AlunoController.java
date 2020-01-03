@@ -31,31 +31,35 @@ import io.swagger.annotations.ApiResponses;
 @ApiGuideline(ApiGuidelineVersion.v1)
 public class AlunoController {
 
-    public static final String PATH = "/api/v1/alunos";
+	public static final String PATH = "/api/v1/alunos";
 
-    @Autowired
-    private AlunoApplicationService service;
+	@Autowired
+	private AlunoApplicationService service;
 
-    @Autowired
-    private ValidatorService validador;
+	@Autowired
+	private ValidatorService validador;
 
-    @ApiOperation(value = "Criar Aluno.", httpMethod = "POST", consumes = APPLICATION_JSON_VALUE)
-    @ApiResponses(value = { @ApiResponse(code = 201, message = "Aluno criado."),
-            @ApiResponse(code = 400, message = "O Aluno não pode ser criado porque está em um estado inválido.") })
-    @PostMapping
-    ResponseEntity<Void> criar(@RequestBody CriarAlunoCommandDto dto) {
+	@ApiOperation(value = "Criar Aluno.", httpMethod = "POST", consumes = APPLICATION_JSON_VALUE)
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Aluno criado."),
+	        @ApiResponse(code = 400, message = "O Aluno não pode ser criado porque está em um estado inválido.") })
+	@PostMapping
+	ResponseEntity<Void> criar(@RequestBody CriarAlunoCommandDto dto) {
 
-        validador.validate(dto).ifPresent(violations -> {
-            throw new SchoolCriarAlunoException(violations);
-        });
+		validador.validate(dto).ifPresent(violations -> { throw new SchoolCriarAlunoException(violations); });
 
-        var cmd = CriarAlunoCommand.of(dto.getNome(), CPF.of(dto.getCpf()), dto.getEmail(), dto.getFormaIngresso(),
-                dto.getMatricula());
+		var cmd = CriarAlunoCommand.of(dto.getNome(),
+		                               CPF.of(dto.getCpf()),
+		                               dto.getEmail(),
+		                               dto.getFormaIngresso(),
+		                               dto.getMatricula());
 
-        AlunoId id = service.handle(cmd);
+		AlunoId id = service.handle(cmd);
 
-        return ResponseEntity
-                .created(ServletUriComponentsBuilder.fromCurrentRequest().path("/").path(id.toString()).build().toUri())
-                .build();
-    }
+		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
+		                                                         .path("/")
+		                                                         .path(id.toString())
+		                                                         .build()
+		                                                         .toUri())
+		                     .build();
+	}
 }

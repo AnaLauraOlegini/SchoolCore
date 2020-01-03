@@ -11,23 +11,23 @@ import com.totvs.tjf.core.message.TOTVSMessage;
 
 @EnableBinding(SchoolExchange.class)
 public class SchoolPublisher {
-    
-    private static final Logger LOG = LoggerFactory.getLogger(SchoolPublisher.class);
 
-    @Autowired
-    private SchoolExchange exchange;
-    
-    public <T> void publish(T event) {
-        Field field;
-        String eventName = null;
-        try {
-            field = event.getClass().getField("NAME");
-            eventName = (String) field.get(event);
-            
-            new TOTVSMessage<T>(eventName, event).sendTo(exchange.output());
-            
-        } catch (Exception e) {
-            LOG.debug("Exchange: {}\nTopic: {}\n", exchange, eventName);
-        }       
-    }
+	private static final Logger LOG = LoggerFactory.getLogger(SchoolPublisher.class);
+
+	@Autowired
+	private SchoolExchange exchange;
+
+	public <T> void publish(T event) {
+		Field field;
+		String eventName = null;
+		try {
+			field = event.getClass().getField("NAME");
+			eventName = (String) field.get(event);
+
+			new TOTVSMessage<T>(eventName, event).sendTo(exchange.output());
+
+		} catch (Exception e) {
+			LOG.debug("Exchange: {}\nTopic: {}\n", exchange, eventName);
+		}
+	}
 }

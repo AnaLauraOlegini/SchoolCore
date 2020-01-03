@@ -12,12 +12,12 @@ import com.totvs.tjf.repository.aggregate.CrudAggregateRepository;
 @Repository
 public class TurmaRepository extends CrudAggregateRepository<Turma, String> implements TurmaDomainRepository {
 
-    public TurmaRepository(EntityManager em, ObjectMapper mapper) {
-        super(em, mapper.copy());
-    }
+	public TurmaRepository(EntityManager em, ObjectMapper mapper) {
+		super(em, mapper.copy());
+	}
 
-    protected String getTableName() {
-        return "turma";
-    }
+	protected String getTableName() {
+		return "turma";
+	}
 
 }

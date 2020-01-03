@@ -30,39 +30,42 @@ import com.totvs.sl.school.core.turma.application.TurmaApplicationService;
 @Transactional
 public class TurmaEventPublisherTest {
 
-    @MockBean
-    private SchoolExchange processor;
+	@MockBean
+	private SchoolExchange processor;
 
-    @Autowired
-    private TurmaApplicationService turmaApplicationService;
+	@Autowired
+	private TurmaApplicationService turmaApplicationService;
 
-    @Before
-    public void setup() {
-        TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
-        Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
-    }
+	@Before
+	public void setup() {
+		TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
+		Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
+	}
 
-    @Test
-    public void deveCriarAluno() {
+	@Test
+	public void deveCriarAluno() {
 
-        var cmd = CriarTurmaCommand.of(Fabrica.turmaDescricao1, Fabrica.turmaAnoLetivo, Fabrica.turmaPeriodoLetivo,
-                Fabrica.turmaNumeroVagas, Fabrica.maisDeUmaDisciplinaParaUmaTurma(),
-                Fabrica.maisDeUmAlunoParaUmaTurma());
+		var cmd = CriarTurmaCommand.of(Fabrica.turmaDescricao1,
+		                               Fabrica.turmaAnoLetivo,
+		                               Fabrica.turmaPeriodoLetivo,
+		                               Fabrica.turmaNumeroVagas,
+		                               Fabrica.maisDeUmaDisciplinaParaUmaTurma(),
+		                               Fabrica.maisDeUmAlunoParaUmaTurma());
 
-        turmaApplicationService.handle(cmd);
+		turmaApplicationService.handle(cmd);
 
-        ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
-        verify(processor.output()).send(argument.capture());
+		ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
+		verify(processor.output()).send(argument.capture());
 
-        TurmaCriadaEvent payLoad = TestUtils.getMessagePayLoad(argument, TurmaCriadaEvent.class);
+		TurmaCriadaEvent payLoad = TestUtils.getMessagePayLoad(argument, TurmaCriadaEvent.class);
 
-        assertThat(payLoad.getTurmaId()).isNotBlank();
-        assertThat(payLoad.getDescricao()).isEqualTo(Fabrica.turmaDescricao1);
-        assertThat(payLoad.getAnoLetivo()).isEqualTo(Fabrica.turmaAnoLetivo);
-        assertThat(payLoad.getPeriodoLetivo()).isEqualTo(Fabrica.turmaPeriodoLetivo);
-        assertThat(payLoad.getNumeroVagas()).isEqualTo(Fabrica.turmaNumeroVagas);
-        assertThat(payLoad.getAlunoId()).size().isEqualTo(3);
-        assertThat(payLoad.getDisciplinaId()).size().isEqualTo(3);
+		assertThat(payLoad.getTurmaId()).isNotBlank();
+		assertThat(payLoad.getDescricao()).isEqualTo(Fabrica.turmaDescricao1);
+		assertThat(payLoad.getAnoLetivo()).isEqualTo(Fabrica.turmaAnoLetivo);
+		assertThat(payLoad.getPeriodoLetivo()).isEqualTo(Fabrica.turmaPeriodoLetivo);
+		assertThat(payLoad.getNumeroVagas()).isEqualTo(Fabrica.turmaNumeroVagas);
+		assertThat(payLoad.getAlunoId()).size().isEqualTo(3);
+		assertThat(payLoad.getDisciplinaId()).size().isEqualTo(3);
 
-    }
+	}
 }

@@ -18,36 +18,36 @@ public class AlunoApplicationService {
 
 	@Autowired
 	private AlunoDomainRepository alunoRepository;
-	
+
 	@Autowired
 	private SchoolPublisher schoolPublisher;
-	
+
 	public AlunoId handle(CriarAlunoCommand cmd) {
-		
-	    Aluno aluno = Aluno.builder()
-	            .id(AlunoId.generate())
-	            .cpf(cmd.getCpf())
-                .nome(cmd.getNome())
-                .email(cmd.getEmail())
-                .formaIngresso(cmd.getFormaIngresso())
-	            .matricula(cmd.getMatricula())
-                .build();
-	            
-	   if (this.alunoRepository.cpfDoAlunoExiste(cmd.getCpf().getNumero()))
+
+		Aluno aluno = Aluno.builder()
+		                   .id(AlunoId.generate())
+		                   .cpf(cmd.getCpf())
+		                   .nome(cmd.getNome())
+		                   .email(cmd.getEmail())
+		                   .formaIngresso(cmd.getFormaIngresso())
+		                   .matricula(cmd.getMatricula())
+		                   .build();
+
+		if (this.alunoRepository.cpfDoAlunoExiste(cmd.getCpf().getNumero()))
 			throw new SchoolCpfDoAlunoDuplicadoException(cmd.getCpf().getNumero());
-		
+
 		this.alunoRepository.insert(aluno);
-        		
+
 		schoolPublisher.publish(AlunoCriadoEvent.builder()
-								.alunoId(aluno.getId().toString())
-								.nome(aluno.getNome())
-								.cpf(aluno.getCpf().getNumero())
-								.email(aluno.getEmail())
-								.formaIngresso(aluno.getFormaIngresso())
-								.matricula(aluno.getMatricula())
-								.build());
-		
+		                                        .alunoId(aluno.getId().toString())
+		                                        .nome(aluno.getNome())
+		                                        .cpf(aluno.getCpf().getNumero())
+		                                        .email(aluno.getEmail())
+		                                        .formaIngresso(aluno.getFormaIngresso())
+		                                        .matricula(aluno.getMatricula())
+		                                        .build());
+
 		return aluno.getId();
-		
+
 	}
 }

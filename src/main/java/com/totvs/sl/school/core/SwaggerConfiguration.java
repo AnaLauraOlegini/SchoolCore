@@ -28,59 +28,62 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 public class SwaggerConfiguration {
 
-    @Autowired
-    private SchoolProperties properties;
+	@Autowired
+	private SchoolProperties properties;
 
-    @Bean
-    public Docket api() {
-        return new Docket(DocumentationType.SWAGGER_2)
-                .useDefaultResponseMessages(false)
-                .forCodeGeneration(true)
-                .select()                                            
-                .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.regex("/api.*"))
-                .build()
-                .securitySchemes(Arrays.asList(securityScheme()))
-                .securityContexts(Arrays.asList(securityContext()))
-                .apiInfo(apiInfo())
-                .enable(properties.getSwagger()
-                .isEnabled());
-    }
+	@Bean
+	public Docket api() {
+		return new Docket(DocumentationType.SWAGGER_2).useDefaultResponseMessages(false)
+		                                              .forCodeGeneration(true)
+		                                              .select()
+		                                              .apis(RequestHandlerSelectors.any())
+		                                              .paths(PathSelectors.regex("/api.*"))
+		                                              .build()
+		                                              .securitySchemes(Arrays.asList(securityScheme()))
+		                                              .securityContexts(Arrays.asList(securityContext()))
+		                                              .apiInfo(apiInfo())
+		                                              .enable(properties.getSwagger().isEnabled());
+	}
 
-    
-    
-    private ApiInfo apiInfo() {
-        return new ApiInfoBuilder().title("Serviço School: API REST")
-                .description("Interface de apresentação das API REST disponíveis para o Serviço School").build();
-    }
+	private ApiInfo apiInfo() {
+		return new ApiInfoBuilder().title("Serviço School: API REST")
+		                           .description("Interface de apresentação das API REST disponíveis para o Serviço School")
+		                           .build();
+	}
 
-    @Bean
-    public SecurityConfiguration security() {
-        return SecurityConfigurationBuilder.builder().clientId(properties.getSwagger().getOauth2().getClientId())
-                .clientSecret(properties.getSwagger().getOauth2().getClientSecret()).scopeSeparator(" ").build();
-    }
+	@Bean
+	public SecurityConfiguration security() {
+		return SecurityConfigurationBuilder.builder()
+		                                   .clientId(properties.getSwagger().getOauth2().getClientId())
+		                                   .clientSecret(properties.getSwagger().getOauth2().getClientSecret())
+		                                   .scopeSeparator(" ")
+		                                   .build();
+	}
 
-    private SecurityScheme securityScheme() {
-        GrantType grantType = new ImplicitGrantBuilder()
-                .loginEndpoint(new LoginEndpointBuilder()
-                        .url(properties.getSwagger().getOauth2().getAuthServer() + "/connect/authorize").build())
-                .build();
+	private SecurityScheme securityScheme() {
+		GrantType grantType = new ImplicitGrantBuilder().loginEndpoint(new LoginEndpointBuilder().url(properties.getSwagger()
+		                                                                                                        .getOauth2()
+		                                                                                                        .getAuthServer()
+		        + "/connect/authorize").build()).build();
 
-        SecurityScheme oauth = new OAuthBuilder().name("spring_oauth").grantTypes(Arrays.asList(grantType))
-                .scopes(Arrays.asList(scopes())).build();
-        return oauth;
-    }
+		SecurityScheme oauth = new OAuthBuilder().name("spring_oauth")
+		                                         .grantTypes(Arrays.asList(grantType))
+		                                         .scopes(Arrays.asList(scopes()))
+		                                         .build();
+		return oauth;
+	}
 
-    private AuthorizationScope[] scopes() {
-        AuthorizationScope[] scopes = { new AuthorizationScope("authorization_api", "Authorization API"),
-                new AuthorizationScope("offline_access", "Access Offline") };
-        return scopes;
-    }
+	private AuthorizationScope[] scopes() {
+		AuthorizationScope[] scopes = { new AuthorizationScope("authorization_api", "Authorization API"),
+		        new AuthorizationScope("offline_access", "Access Offline") };
+		return scopes;
+	}
 
-    private SecurityContext securityContext() {
-        return SecurityContext.builder()
-                .securityReferences(Arrays.asList(new SecurityReference("spring_oauth", scopes())))
-                .forPaths(PathSelectors.regex("/api.*")).build();
-    }
- 
+	private SecurityContext securityContext() {
+		return SecurityContext.builder()
+		                      .securityReferences(Arrays.asList(new SecurityReference("spring_oauth", scopes())))
+		                      .forPaths(PathSelectors.regex("/api.*"))
+		                      .build();
+	}
+
 }

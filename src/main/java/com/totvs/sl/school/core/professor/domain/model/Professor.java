@@ -16,40 +16,39 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Professor extends Pessoa {
 
-    @NotNull
-    @AggregateIdentifier
-    private ProfessorId id;
-    @NotNull
-    private String nome;
-    @NotNull
-    private CPF cpf;
-    @NotNull
-    private String email;
-    @NotNull
-    private String titulacao;
+	@AggregateIdentifier
+	private ProfessorId id;
+	@NotNull
+	private String nome;
+	@NotNull
+	private CPF cpf;
+	@NotNull
+	private String email;
+	@NotNull
+	private String titulacao;
 
-    @Builder
-    private Professor(ProfessorId id, String nome, CPF cpf, String email, String titulacao) {
-        this.id = id;
-        this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-        this.titulacao = titulacao;
+	@Builder
+	private Professor(ProfessorId id, String nome, CPF cpf, String email, String titulacao) {
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.email = email;
+		this.titulacao = titulacao;
 
-    }
+	}
 
-    @Override
-    public String getNome() {
-        return this.nome;
-    }
+	@Override
+	public String getNome() {
+		return this.nome;
+	}
 
-    @Override
-    public CPF getCpf() {
-        return this.cpf;
-    }
+	@Override
+	public CPF getCpf() {
+		return this.cpf;
+	}
 
-    @Override
-    public String getEmail() {
-        return this.email;
-    }
+	@Override
+	public String getEmail() {
+		return this.email;
+	}
 }
