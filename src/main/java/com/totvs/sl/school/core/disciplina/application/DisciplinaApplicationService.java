@@ -33,15 +33,6 @@ public class DisciplinaApplicationService {
 		                                  .professorId(cmd.getProfessorId())
 		                                  .build();
 
-		if (this.disciplinaDomainRepository.verificaSeProfessorJaExisteNaDisciplina(cmd.getProfessorId()
-		                                                                               .stream()
-		                                                                               .map(String::valueOf)
-		                                                                               .collect(Collectors.toList())))
-			throw new SchoolIdDisciplinaDuplicadoException(cmd.getProfessorId()
-			                                                  .stream()
-			                                                  .map(String::valueOf)
-			                                                  .collect(Collectors.toList()));
-
 		this.disciplinaDomainRepository.insert(disciplina);
 
 		schoolPublisher.publish(DisciplinaCriadaEvent.builder()

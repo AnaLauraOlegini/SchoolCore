@@ -2,6 +2,8 @@ package com.totvs.sl.school.core.turma.api;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -11,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
+import com.totvs.sl.school.core.aluno.domain.model.AlunoId;
+import com.totvs.sl.school.core.disciplina.domain.model.DisciplinaId;
 import com.totvs.sl.school.core.turma.application.CriarTurmaCommand;
 import com.totvs.sl.school.core.turma.application.TurmaApplicationService;
 import com.totvs.sl.school.core.turma.domain.model.TurmaId;
@@ -42,7 +46,7 @@ public class TurmaController {
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Turma criado."),
 	        @ApiResponse(code = 400, message = "A turma não pode ser criado porque está em um estado inválido.") })
 	@PostMapping
-	ResponseEntity<Void> criar(@RequestBody CriarTurmaCommandDto dto) {
+	public ResponseEntity<Void> criar(@RequestBody CriarTurmaDto dto) {
 
 		validador.validate(dto).ifPresent(violations -> { throw new SchoolCriarTurmaException(violations); });
 
@@ -50,8 +54,11 @@ public class TurmaController {
 		                               dto.getAnoLetivo(),
 		                               dto.getPeriodoLetivo(),
 		                               dto.getNumeroVagas(),
-		                               dto.getDisciplinaId(),
-		                               dto.getAlunoId());
+		                               dto.getDisciplinaId()
+		                                  .stream()
+		                                  .map(DisciplinaId::from)
+		                                  .collect(Collectors.toList()),
+		                               dto.getAlunoId().stream().map(AlunoId::from).collect(Collectors.toList()));
 
 		TurmaId id = service.handle(cmd);
 

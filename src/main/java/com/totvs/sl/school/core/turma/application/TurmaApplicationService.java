@@ -1,5 +1,7 @@
 package com.totvs.sl.school.core.turma.application;
 
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -40,8 +42,14 @@ public class TurmaApplicationService {
 		                                        .anoLetivo(turma.getAnoLetivo())
 		                                        .periodoLetivo(turma.getPeriodoLetivo())
 		                                        .numeroVagas(turma.getNumeroVagas())
-		                                        .disciplinaId(turma.getDisciplinaId())
-		                                        .alunoId(turma.getAlunoId())
+		                                        .disciplinaId(turma.getDisciplinaId()
+		                                                           .stream()
+		                                                           .map(String::valueOf)
+		                                                           .collect(Collectors.toList()))
+		                                        .alunoId(turma.getAlunoId()
+		                                                      .stream()
+		                                                      .map(String::valueOf)
+		                                                      .collect(Collectors.toList()))
 		                                        .build());
 
 		return turma.getId();

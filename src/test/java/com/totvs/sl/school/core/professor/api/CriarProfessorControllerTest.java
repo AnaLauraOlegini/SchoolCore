@@ -54,10 +54,10 @@ public class CriarProfessorControllerTest {
 	@Description("Inclusão de Professor OK")
 	public void deveCriarProfessor() throws Exception {
 
-		var dto = new CriarProfessorCommandDto("Manoel Sérgio da Cunha",
-		                                       "33699891909",
-		                                       "manoelsergiodacunha-84@gmail.com",
-		                                       "PHD");
+		var dto = new CriarProfessorDto("Manoel Sérgio da Cunha",
+		                                "33699891909",
+		                                "manoelsergiodacunha-84@gmail.com",
+		                                "PHD");
 
 		this.mock.perform(request(HttpMethod.POST,
 		                          ProfessorController.PATH).header(HEADER_STRING, jwt)
@@ -70,7 +70,7 @@ public class CriarProfessorControllerTest {
 	@Description("Inclusão de Professor com campos nulos")
 	public void naoDeveCriarProfessorComCamposNulos() throws Exception {
 
-		var dto = new CriarProfessorCommandDto(null, null, null, null);
+		var dto = new CriarProfessorDto(null, null, null, null);
 
 		MvcResult result = this.mock.perform(request(HttpMethod.POST,
 		                                             ProfessorController.PATH).header(HEADER_STRING, jwt)
@@ -96,10 +96,10 @@ public class CriarProfessorControllerTest {
 
 		this.professorRepository.insert(professor);
 
-		CriarProfessorCommandDto dto = new CriarProfessorCommandDto("Beatriz Isadora Mendes",
-		                                                            "59637547800",
-		                                                            "beatrizisadoramendes_@hotmail.com",
-		                                                            "PHD");
+		CriarProfessorDto dto = new CriarProfessorDto("Beatriz Isadora Mendes",
+		                                              "59637547800",
+		                                              "beatrizisadoramendes_@hotmail.com",
+		                                              "PHD");
 
 		MvcResult result = this.mock.perform(request(HttpMethod.POST,
 		                                             ProfessorController.PATH).header(HEADER_STRING, jwt)

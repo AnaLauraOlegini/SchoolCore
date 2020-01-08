@@ -24,6 +24,10 @@ public class DisciplinaId {
 		return new DisciplinaId(UUID.randomUUID());
 	}
 
+	public static DisciplinaId from(String id) {
+		return new DisciplinaId(UUID.fromString(id));
+	}
+
 	@Override
 	public String toString() {
 		return id.toString();

@@ -43,7 +43,7 @@ public class DisciplinaEventPublisherTest {
 	}
 
 	@Test
-	public void deveCriarAluno() {
+	public void deveCriarDisciplina() {
 
 		var cmd = CriarDisciplinaCommand.of(Fabrica.disciplinaDescricao1,
 		                                    Fabrica.disciplinaSigla1,
