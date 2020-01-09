@@ -19,12 +19,7 @@ public class Aluno extends Pessoa {
 	@NotNull
 	@AggregateIdentifier
 	private AlunoId id;
-	@NotNull
-	private String nome;
-	@NotNull
-	private CPF cpf;
-	@NotNull
-	private String email;
+
 	@NotNull
 	private String formaIngresso;
 	@NotNull
@@ -40,18 +35,16 @@ public class Aluno extends Pessoa {
 		this.formaIngresso = formaIngresso;
 	}
 
-	@Override
 	public String getNome() {
 		return this.nome;
 	}
-
-	@Override
+	
 	public CPF getCpf() {
 		return this.cpf;
 	}
-
-	@Override
+	
 	public String getEmail() {
 		return this.email;
 	}
+
 }

@@ -24,6 +24,10 @@ public class AlunoId {
 		return new AlunoId(UUID.randomUUID());
 	}
 
+	public static AlunoId from(String id) {
+		return new AlunoId(UUID.fromString(id));
+	}
+
 	@Override
 	public String toString() {
 		return id.toString();

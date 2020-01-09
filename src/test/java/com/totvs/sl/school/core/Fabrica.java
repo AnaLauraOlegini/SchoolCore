@@ -49,7 +49,7 @@ public class Fabrica {
 		return professorId;
 	}
 
-	public static List<AlunoId> maisDeUmAlunoParaUmaTurma() {
+	public static List<AlunoId> criarUmaTurmaComAlunos() {
 		List<AlunoId> alunoId = new ArrayList<>();
 		alunoId.add(alunoId1);
 		alunoId.add(alunoId2);
@@ -57,11 +57,27 @@ public class Fabrica {
 		return alunoId;
 	}
 
-	public static List<DisciplinaId> maisDeUmaDisciplinaParaUmaTurma() {
+	public static List<String> maisDeUmAlunoParaUmaTurma() {
+		List<String> alunoId = new ArrayList<>();
+		alunoId.add(alunoId1.toString());
+		alunoId.add(alunoId2.toString());
+		alunoId.add(alunoId3.toString());
+		return alunoId;
+	}
+
+	public static List<DisciplinaId> criarUmaTurmaComDisciplinas() {
 		List<DisciplinaId> disciplinaId = new ArrayList<>();
 		disciplinaId.add(disciplinaId1);
 		disciplinaId.add(disciplinaId2);
 		disciplinaId.add(disciplinaId3);
+		return disciplinaId;
+	}
+
+	public static List<String> maisDeUmaDisciplinaParaUmaTurma() {
+		List<String> disciplinaId = new ArrayList<>();
+		disciplinaId.add(disciplinaId1.toString());
+		disciplinaId.add(disciplinaId2.toString());
+		disciplinaId.add(disciplinaId3.toString());
 		return disciplinaId;
 	}
 

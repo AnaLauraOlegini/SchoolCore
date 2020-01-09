@@ -8,7 +8,7 @@ import lombok.Getter;
 @Getter
 @Data(staticConstructor = "of")
 public final class CriarAlunoCommand {
-
+	
 	private final String nome;
 	private final CPF cpf;
 	private final String email;

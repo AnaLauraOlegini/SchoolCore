@@ -54,11 +54,11 @@ public class CriarAlunoControllerTest {
 	@Description("Inclusão de Aluno OK")
 	public void deveCriarAluno() throws Exception {
 
-		var dto = new CriarAlunoCommandDto("Rosa Malu Clara Moura",
-		                                   "51573728926",
-		                                   "rosamaluclaramoura_@regional.com.br",
-		                                   "ENADE",
-		                                   123456789);
+		var dto = new CriarAlunoDto("Rosa Malu Clara Moura",
+		                            "51573728926",
+		                            "rosamaluclaramoura_@regional.com.br",
+		                            "ENADE",
+		                            123456789);
 
 		this.mock.perform(request(HttpMethod.POST, AlunoController.PATH).header(HEADER_STRING, jwt)
 		                                                                .contentType(MediaType.APPLICATION_JSON_VALUE)
@@ -71,7 +71,7 @@ public class CriarAlunoControllerTest {
 	@Description("Inclusão de Aluno com campos nulos")
 	public void naoDeveCriarAlunoComCamposNulos() throws Exception {
 
-		var dto = new CriarAlunoCommandDto(null, null, null, null, 0);
+		var dto = new CriarAlunoDto(null, null, null, null, 0);
 
 		MvcResult result = this.mock.perform(request(HttpMethod.POST,
 		                                             AlunoController.PATH).header(HEADER_STRING, jwt)
@@ -98,11 +98,11 @@ public class CriarAlunoControllerTest {
 
 		this.alunoRepository.insert(aluno);
 
-		CriarAlunoCommandDto dto = new CriarAlunoCommandDto("Victor Marcelo Santos",
-		                                                    "33511897963",
-		                                                    "vvictormarcelosantos@formulaweb.com.br",
-		                                                    "ENADE",
-		                                                    168223223);
+		CriarAlunoDto dto = new CriarAlunoDto("Victor Marcelo Santos",
+		                                      "33511897963",
+		                                      "vvictormarcelosantos@formulaweb.com.br",
+		                                      "ENADE",
+		                                      168223223);
 
 		MvcResult result = this.mock.perform(request(HttpMethod.POST,
 		                                             AlunoController.PATH).header(HEADER_STRING, jwt)
@@ -118,11 +118,11 @@ public class CriarAlunoControllerTest {
 	@Description("Inclusão de Aluno com CPF valor invalido - menor")
 	public void naoDeveCriarAlunoComCpfInvalidoMenor() throws Exception {
 
-		var dto = new CriarAlunoCommandDto("Henry Alexandre Ian da Luz",
-		                                   "306398229",
-		                                   "hhenryalexandreiandaluz@genesyslab.com",
-		                                   "VESTIBULAR",
-		                                   408603999);
+		var dto = new CriarAlunoDto("Henry Alexandre Ian da Luz",
+		                            "306398229",
+		                            "hhenryalexandreiandaluz@genesyslab.com",
+		                            "VESTIBULAR",
+		                            408603999);
 
 		MvcResult result = this.mock.perform(request(HttpMethod.POST,
 		                                             AlunoController.PATH).header(HEADER_STRING, jwt)

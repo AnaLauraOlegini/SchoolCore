@@ -24,6 +24,10 @@ public class TurmaId {
 		return new TurmaId(UUID.randomUUID());
 	}
 
+	public static TurmaId from(String id) {
+		return new TurmaId(UUID.fromString(id));
+	}
+
 	@Override
 	public String toString() {
 		return id.toString();

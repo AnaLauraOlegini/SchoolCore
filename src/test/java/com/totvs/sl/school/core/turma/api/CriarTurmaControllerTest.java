@@ -48,12 +48,12 @@ public class CriarTurmaControllerTest {
 	@Test
 	public void deveCriarDisciplina() throws Exception {
 
-		var dto = new CriarTurmaCommandDto(Fabrica.turmaDescricao1,
-		                                   Fabrica.turmaAnoLetivo,
-		                                   Fabrica.turmaPeriodoLetivo,
-		                                   Fabrica.turmaNumeroVagas,
-		                                   Fabrica.maisDeUmaDisciplinaParaUmaTurma(),
-		                                   Fabrica.maisDeUmAlunoParaUmaTurma());
+		var dto = new CriarTurmaDto(Fabrica.turmaDescricao1,
+		                            Fabrica.turmaAnoLetivo,
+		                            Fabrica.turmaPeriodoLetivo,
+		                            Fabrica.turmaNumeroVagas,
+		                            Fabrica.maisDeUmaDisciplinaParaUmaTurma(),
+		                            Fabrica.maisDeUmAlunoParaUmaTurma());
 
 		this.mock.perform(request(HttpMethod.POST, TurmaController.PATH).header(HEADER_STRING, jwt)
 		                                                                .contentType(MediaType.APPLICATION_JSON_VALUE)

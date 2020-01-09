@@ -43,14 +43,14 @@ public class TurmaEventPublisherTest {
 	}
 
 	@Test
-	public void deveCriarAluno() {
+	public void deveCriarTurma() {
 
 		var cmd = CriarTurmaCommand.of(Fabrica.turmaDescricao1,
 		                               Fabrica.turmaAnoLetivo,
 		                               Fabrica.turmaPeriodoLetivo,
 		                               Fabrica.turmaNumeroVagas,
-		                               Fabrica.maisDeUmaDisciplinaParaUmaTurma(),
-		                               Fabrica.maisDeUmAlunoParaUmaTurma());
+		                               Fabrica.criarUmaTurmaComDisciplinas(),
+		                               Fabrica.criarUmaTurmaComAlunos());
 
 		turmaApplicationService.handle(cmd);
 

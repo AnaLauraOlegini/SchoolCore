@@ -18,12 +18,7 @@ public class Professor extends Pessoa {
 
 	@AggregateIdentifier
 	private ProfessorId id;
-	@NotNull
-	private String nome;
-	@NotNull
-	private CPF cpf;
-	@NotNull
-	private String email;
+
 	@NotNull
 	private String titulacao;
 
@@ -37,17 +32,14 @@ public class Professor extends Pessoa {
 
 	}
 
-	@Override
 	public String getNome() {
 		return this.nome;
 	}
 
-	@Override
 	public CPF getCpf() {
 		return this.cpf;
 	}
 
-	@Override
 	public String getEmail() {
 		return this.email;
 	}

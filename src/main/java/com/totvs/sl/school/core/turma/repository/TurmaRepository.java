@@ -16,6 +16,7 @@ public class TurmaRepository extends CrudAggregateRepository<Turma, String> impl
 		super(em, mapper.copy());
 	}
 
+	@Override
 	protected String getTableName() {
 		return "turma";
 	}

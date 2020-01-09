@@ -43,7 +43,7 @@ public class AlunoController {
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Aluno criado."),
 	        @ApiResponse(code = 400, message = "O Aluno não pode ser criado porque está em um estado inválido.") })
 	@PostMapping
-	ResponseEntity<Void> criar(@RequestBody CriarAlunoCommandDto dto) {
+	ResponseEntity<Void> criar(@RequestBody CriarAlunoDto dto) {
 
 		validador.validate(dto).ifPresent(violations -> { throw new SchoolCriarAlunoException(violations); });
 

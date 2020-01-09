@@ -43,7 +43,7 @@ public class ProfessorController {
 	@ApiResponses(value = { @ApiResponse(code = 201, message = "Professor criado."),
 	        @ApiResponse(code = 400, message = "O professor não pode ser criado porque está em um estado inválido.") })
 	@PostMapping
-	ResponseEntity<Void> criar(@RequestBody CriarProfessorCommandDto dto) {
+	ResponseEntity<Void> criar(@RequestBody CriarProfessorDto dto) {
 
 		validador.validate(dto).ifPresent(violations -> { throw new SchoolCriarProfessorException(violations); });
 

@@ -1,11 +1,7 @@
 package com.totvs.sl.school.core.disciplina.repository;
 
-import java.sql.Types;
-import java.util.List;
-
 import javax.persistence.EntityManager;
 
-import org.springframework.jdbc.core.SqlParameterValue;
 import org.springframework.stereotype.Repository;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,15 +20,6 @@ public class DisciplinaRepository extends CrudAggregateRepository<Disciplina, St
 	@Override
 	protected String getTableName() {
 		return "disciplina";
-	}
-
-	@Override
-	public boolean verificaSeProfessorJaExisteNaDisciplina(List<String> professorId) {
-		// return this.exists("data->'professorId' @> ?", new
-		// SqlParameterValue(Types.OTHER, "[{\"professorId\":{\"id\":\"" + professorId +
-		// "\"}}]"));
-		return this.exists("data->'professorId' = ?",
-		                   new SqlParameterValue(Types.OTHER, "[{\"professorId\":{\"id\":\"" + professorId + "\"}}]"));
 	}
 
 }

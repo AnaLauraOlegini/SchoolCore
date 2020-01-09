@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 @AllArgsConstructor
 @ApiModel(description = "Informações para cadastro de um novo professor.")
-public class CriarProfessorCommandDto {
+public class CriarProfessorDto {
 
 	private String nome;
 

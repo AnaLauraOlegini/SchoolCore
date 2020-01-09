@@ -2,9 +2,6 @@ package com.totvs.sl.school.core.turma.amqp.events;
 
 import java.util.List;
 
-import com.totvs.sl.school.core.aluno.domain.model.AlunoId;
-import com.totvs.sl.school.core.disciplina.domain.model.DisciplinaId;
-
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -18,7 +15,7 @@ import lombok.ToString;
 @ToString
 public class TurmaCriadaEvent {
 
-	public static final transient String NAME = "TurmaCriadaEvent";
+	public static final String NAME = "TurmaCriadaEvent";
 
 	private String turmaId;
 
@@ -30,8 +27,8 @@ public class TurmaCriadaEvent {
 
 	private int numeroVagas;
 
-	private List<DisciplinaId> disciplinaId;
+	private List<String> disciplinaId;
 
-	private List<AlunoId> alunoId;
+	private List<String> alunoId;
 
 }

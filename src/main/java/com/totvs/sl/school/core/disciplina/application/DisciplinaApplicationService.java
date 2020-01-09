@@ -11,7 +11,6 @@ import com.totvs.sl.school.core.disciplina.amqp.events.DisciplinaCriadaEvent;
 import com.totvs.sl.school.core.disciplina.domain.model.Disciplina;
 import com.totvs.sl.school.core.disciplina.domain.model.DisciplinaDomainRepository;
 import com.totvs.sl.school.core.disciplina.domain.model.DisciplinaId;
-import com.totvs.sl.school.core.disciplina.exception.SchoolIdDisciplinaDuplicadoException;
 
 @Service
 @Transactional
@@ -32,15 +31,6 @@ public class DisciplinaApplicationService {
 		                                  .cargaHoraria(cmd.getCargaHoraria())
 		                                  .professorId(cmd.getProfessorId())
 		                                  .build();
-
-		if (this.disciplinaDomainRepository.verificaSeProfessorJaExisteNaDisciplina(cmd.getProfessorId()
-		                                                                               .stream()
-		                                                                               .map(String::valueOf)
-		                                                                               .collect(Collectors.toList())))
-			throw new SchoolIdDisciplinaDuplicadoException(cmd.getProfessorId()
-			                                                  .stream()
-			                                                  .map(String::valueOf)
-			                                                  .collect(Collectors.toList()));
 
 		this.disciplinaDomainRepository.insert(disciplina);
 
