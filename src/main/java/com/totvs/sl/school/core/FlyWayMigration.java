@@ -15,7 +15,7 @@ public class FlyWayMigration implements ApplicationListener<ContextRefreshedEven
 
 	@Autowired
 	private DataSource dataSource;
-	final transient Logger log = LoggerFactory.getLogger(FlyWayMigration.class);
+	final Logger log = LoggerFactory.getLogger(FlyWayMigration.class);
 
 	@Autowired
 	private FlyWayProperties properties;

@@ -3,8 +3,6 @@ package com.totvs.sl.school.core.turma.domain.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import com.totvs.sl.school.core.aluno.domain.model.AlunoId;
 import com.totvs.sl.school.core.disciplina.domain.model.DisciplinaId;
 import com.totvs.tjf.core.stereotype.Aggregate;
@@ -19,11 +17,9 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Turma {
 
-	@NotNull
 	@AggregateIdentifier
 	private TurmaId id;
 
-	@NotNull
 	private String descricao;
 
 	private int anoLetivo;

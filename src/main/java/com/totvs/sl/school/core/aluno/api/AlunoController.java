@@ -3,6 +3,7 @@ package com.totvs.sl.school.core.aluno.api;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -39,11 +40,11 @@ public class AlunoController {
 	@Autowired
 	private ValidatorService validador;
 
-	@ApiOperation(value = "Criar Aluno.", httpMethod = "POST", consumes = APPLICATION_JSON_VALUE)
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Aluno criado."),
-	        @ApiResponse(code = 400, message = "O Aluno não pode ser criado porque está em um estado inválido.") })
 	@PostMapping
-	ResponseEntity<Void> criar(@RequestBody CriarAlunoDto dto) {
+	@ApiOperation(value = "Cadastrar um novo Aluno.", httpMethod = "POST", consumes = MediaType.APPLICATION_JSON_VALUE)
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Aluno cadastrado com sucesso."),
+	        @ApiResponse(code = 400, message = "O Aluno não pode ser cadastrado pois possui alguma informação inválida.") })
+	public ResponseEntity<Void> criar(@RequestBody CriarAlunoDto dto) {
 
 		validador.validate(dto).ifPresent(violations -> { throw new SchoolCriarAlunoException(violations); });
 
@@ -55,11 +56,8 @@ public class AlunoController {
 
 		AlunoId id = service.handle(cmd);
 
-		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-		                                                         .path("/")
-		                                                         .path(id.toString())
-		                                                         .build()
-		                                                         .toUri())
-		                     .build();
+		var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/").path(id.toString()).build().toUri();
+
+		return ResponseEntity.created(uri).build();
 	}
 }

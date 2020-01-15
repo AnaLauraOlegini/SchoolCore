@@ -1,7 +1,7 @@
 package com.totvs.sl.school.core.turma.api;
 
 import static com.totvs.tjf.mock.test.RacEmulator.HEADER_STRING;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.request;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import org.junit.BeforeClass;
@@ -10,32 +10,29 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.totvs.sl.school.core.Fabrica;
-import com.totvs.sl.school.core.SchoolCoreApplication;
 import com.totvs.sl.school.core.TestUtils;
-import com.totvs.sl.school.core.turma.domain.model.TurmaDomainRepository;
+import com.totvs.sl.school.core.turma.exception.SchoolCriarTurmaException;
 import com.totvs.tjf.mock.test.MockHttpServer;
 import com.totvs.tjf.mock.test.RacEmulator;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "test")
-@SpringBootTest(classes = SchoolCoreApplication.class)
-@Transactional
+@SpringBootTest
 @AutoConfigureMockMvc
+@Transactional
 public class CriarTurmaControllerTest {
 
 	@Autowired
 	private MockMvc mock;
-
-	@Autowired
-	private TurmaDomainRepository turmaDomainRepository;
 
 	@BeforeClass
 	public static void beforeClass() {
@@ -48,18 +45,38 @@ public class CriarTurmaControllerTest {
 	@Test
 	public void deveCriarDisciplina() throws Exception {
 
-		var dto = new CriarTurmaDto(Fabrica.turmaDescricao1,
-		                            Fabrica.turmaAnoLetivo,
-		                            Fabrica.turmaPeriodoLetivo,
-		                            Fabrica.turmaNumeroVagas,
-		                            Fabrica.maisDeUmaDisciplinaParaUmaTurma(),
-		                            Fabrica.maisDeUmAlunoParaUmaTurma());
+		CriarTurmaDto dto = new CriarTurmaDto(Fabrica.turmaDescricao1,
+		                                      Fabrica.turmaAnoLetivo1,
+		                                      Fabrica.turmaPeriodoLetivo1,
+		                                      Fabrica.turmaNumeroVagas1,
+		                                      Fabrica.maisDeUmaDisciplinaParaUmaTurma(),
+		                                      Fabrica.maisDeUmAlunoParaUmaTurma());
 
-		this.mock.perform(request(HttpMethod.POST, TurmaController.PATH).header(HEADER_STRING, jwt)
-		                                                                .contentType(MediaType.APPLICATION_JSON_VALUE)
-		                                                                .content(TestUtils.objectToJson(dto)))
+		this.mock.perform(MockMvcRequestBuilders.post(TurmaController.PATH)
+		                                        .header(HEADER_STRING, jwt)
+		                                        .contentType(MediaType.APPLICATION_JSON_VALUE)
+		                                        .content(TestUtils.objectToJson(dto)))
 		         .andExpect(status().is2xxSuccessful());
-
 	}
 
+	@Test
+	public void naoDeveCriarTurmaComCamposNulos() throws Exception {
+
+		CriarTurmaDto dto = new CriarTurmaDto(null,
+		                                      Fabrica.turmaAnoLetivo1,
+		                                      Fabrica.turmaPeriodoLetivo1,
+		                                      Fabrica.turmaNumeroVagas1,
+		                                      Fabrica.maisDeUmaDisciplinaParaUmaTurma(),
+		                                      Fabrica.maisDeUmAlunoParaUmaTurma());
+
+		MvcResult result = this.mock.perform(MockMvcRequestBuilders.post(TurmaController.PATH)
+		                                                           .header(HEADER_STRING, jwt)
+		                                                           .contentType(MediaType.APPLICATION_JSON_VALUE)
+		                                                           .content(TestUtils.objectToJson(dto)))
+		                            .andExpect(status().isBadRequest())
+		                            .andReturn();
+
+		assertThat(result.getResponse().getContentAsString()).contains(SchoolCriarTurmaException.class.getSimpleName());
+		assertThat(result.getResponse().getContentAsString()).contains("CriarTurmaDTO.descricao.NotBlank");
+	}
 }

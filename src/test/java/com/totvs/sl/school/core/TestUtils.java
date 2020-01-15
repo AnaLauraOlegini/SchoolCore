@@ -14,19 +14,14 @@ public final class TestUtils {
 
 	public static Long externalId = 1L;
 
-	private static ObjectMapper mapper;
+	private static ObjectMapper mapper = new ObjectMapper();
 
-	private static ObjectMapper mapperInstance() {
-		if (mapper == null) {
-			mapper = new ObjectMapper();
-			mapper.registerModule(new JavaTimeModule());
-		}
-
-		return mapper;
+	static {
+		mapper.registerModule(new JavaTimeModule());
 	}
 
 	public static String objectToJson(Object value) throws Exception {
-		return mapperInstance().writeValueAsString(value);
+		return mapper.writeValueAsString(value);
 	}
 
 	public static <T> T getMessagePayLoad(ArgumentCaptor<Message<?>> argument, Class<T> event) {

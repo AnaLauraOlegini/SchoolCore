@@ -8,6 +8,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import lombok.ToString;
 
 @Data
@@ -17,15 +18,19 @@ import lombok.ToString;
 @ToString
 public class DisciplinaCriadaEvent {
 
-	public static final transient String NAME = "DisciplinaCriadaEvent";
-
+	public static final String NAME = "DisciplinaCriadaEvent";
+	
+	@NonNull
 	private String disciplinaId;
-
+	
+	@NonNull
 	private String descricao;
-
+	
+	@NonNull
 	private Disciplinas sigla;
-
+	
 	private int cargaHoraria;
 
+	@NonNull
 	private List<String> professorId;
 }

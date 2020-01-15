@@ -3,8 +3,6 @@ package com.totvs.sl.school.core.disciplina.domain.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.validation.constraints.NotNull;
-
 import com.totvs.sl.school.core.disciplina.domain.enums.Disciplinas;
 import com.totvs.sl.school.core.professor.domain.model.ProfessorId;
 import com.totvs.tjf.core.stereotype.Aggregate;
@@ -19,14 +17,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Disciplina {
 
-	@NotNull
 	@AggregateIdentifier
 	private DisciplinaId id;
 
-	@NotNull
 	private String descricao;
 
-	@NotNull
 	private Disciplinas sigla;
 
 	private int cargaHoraria;

@@ -22,6 +22,11 @@ public class ProfessorApplicationService {
 	@Autowired
 	private SchoolPublisher schoolPublisher;
 
+	public ProfessorApplicationService(ProfessorDomainRepository professorRepository, SchoolPublisher schoolPublisher) {
+		this.professorRepository = professorRepository;
+		this.schoolPublisher = schoolPublisher;
+	}
+
 	public ProfessorId handle(CriarProfessorCommand cmd) {
 
 		Professor professor = Professor.builder()

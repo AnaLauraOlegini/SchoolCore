@@ -21,7 +21,7 @@
 
 	<name>School :: Core Service</name>
 	<description>School :: Core Service</description>
-    
+
 	<repositories>
 
 		<repository>
@@ -41,244 +41,244 @@
 
 	</repositories>
 
-    <build>
-        <plugins>
-            <plugin>
-                 <groupId>org.apache.maven.plugins</groupId>
-                 <artifactId>maven-surefire-plugin</artifactId>
-                 <dependencies>
-                      <dependency>
-                          <groupId>org.apache.maven.surefire</groupId>
-                          <artifactId>surefire-junit47</artifactId>
-                          <version>2.22.1</version>
-                      </dependency>
-                 </dependencies>
-                 <configuration>
-                     <parallel>classes</parallel>
-                     <threadCount>1</threadCount>
-                     <forkCount>2</forkCount>
-                     <reuseForks>true</reuseForks>
-                 </configuration>
-	    </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>default-prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>default-report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-    
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.maven.surefire</groupId>
+						<artifactId>surefire-junit47</artifactId>
+						<version>2.22.1</version>
+					</dependency>
+				</dependencies>
+				<configuration>
+					<parallel>classes</parallel>
+					<threadCount>1</threadCount>
+					<forkCount>1</forkCount>
+					<reuseForks>true</reuseForks>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>default-prepare-agent</id>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<execution>
+						<id>default-report</id>
+						<phase>prepare-package</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+		</plugins>
+	</build>
+
 	<dependencies>
 
 		<!-- TJF -->
-        <dependency>
-            <groupId>com.totvs.tjf</groupId>
-            <artifactId>tjf-api-core</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-api-core</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.totvs.tjf</groupId>
-            <artifactId>tjf-core-validation</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-core-validation</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.totvs.tjf</groupId>
-            <artifactId>tjf-api-context</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-api-context</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.totvs.tjf</groupId>
-            <artifactId>tjf-messaging-stream</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-messaging-stream</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.totvs.tjf</groupId>
-            <artifactId>tjf-security-web</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-security-web</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.totvs.tjf</groupId>
-            <artifactId>tjf-repository-aggregate</artifactId>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.totvs.tjf</groupId>
-            <artifactId>tjf-tenant-schema</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-repository-aggregate</artifactId>
+		</dependency>
 
-        <!-- Spring -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-tomcat</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-tenant-schema</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-bean-validators</artifactId>
-        </dependency>
+		<!-- Spring -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+			<exclusions>
+				<exclusion>
+					<groupId>org.springframework.boot</groupId>
+					<artifactId>spring-boot-starter-tomcat</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-devtools</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-bean-validators</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-undertow</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-undertow</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-data-jpa</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-actuator</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-binder-rabbit</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-configuration-processor</artifactId>
-            <optional>true</optional>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-binder-rabbit</artifactId>
+		</dependency>
 
-        <!-- Swagger -->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-configuration-processor</artifactId>
+			<optional>true</optional>
+		</dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
+		<!-- Swagger -->
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger2</artifactId>
+		</dependency>
 
-        <!-- Micrometer -->
-        <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-registry-prometheus</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>io.springfox</groupId>
+			<artifactId>springfox-swagger-ui</artifactId>
+		</dependency>
 
-        <!-- External -->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <scope>provided</scope>
-        </dependency>
+		<!-- Micrometer -->
+		<dependency>
+			<groupId>io.micrometer</groupId>
+			<artifactId>micrometer-registry-prometheus</artifactId>
+		</dependency>
 
-        <!-- Database -->
-        <dependency>
-            <groupId>org.flywaydb</groupId>
-            <artifactId>flyway-core</artifactId>
-        </dependency>
+		<!-- External -->
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
-        <dependency>
-            <groupId>org.postgresql</groupId>
-            <artifactId>postgresql</artifactId>
-        </dependency>
+		<!-- Database -->
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-core</artifactId>
+		</dependency>
 
-        <!-- Test -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-		    <exclusions>
-		        <exclusion>
-		            <groupId>com.vaadin.external.google</groupId>
-		            <artifactId>android-json</artifactId>
-		        </exclusion>
-		    </exclusions>
-        </dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+		</dependency>
 
-        <dependency>
-            <groupId>com.totvs.tjf</groupId>
-            <artifactId>tjf-test-rac</artifactId>
-            <scope>test</scope>
-        </dependency>
+		<!-- Test -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>com.vaadin.external.google</groupId>
+					<artifactId>android-json</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-stream-test-support</artifactId>
-            <scope>test</scope>
-        </dependency>
-        
-        <dependency>
-            <groupId>com.tngtech.archunit</groupId>
-            <artifactId>archunit-junit4</artifactId>
-            <version>0.11.0</version>
-            <scope>test</scope>
-        </dependency>
+		<dependency>
+			<groupId>com.totvs.tjf</groupId>
+			<artifactId>tjf-test-rac</artifactId>
+			<scope>test</scope>
+		</dependency>
 
-        <dependency>
-        	<groupId>javax.xml.bind</groupId>
-        	<artifactId>jaxb-api</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-stream-test-support</artifactId>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>com.tngtech.archunit</groupId>
+			<artifactId>archunit-junit4</artifactId>
+			<version>0.11.0</version>
+			<scope>test</scope>
+		</dependency>
+
+		<dependency>
+			<groupId>javax.xml.bind</groupId>
+			<artifactId>jaxb-api</artifactId>
+		</dependency>
 	</dependencies>
 
 	<profiles>
-        <profile>
+		<profile>
 
-            <id>local</id>
+			<id>local</id>
 
-            <activation>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>local</value>
-                </property>
-            </activation>
-        </profile>
-        <profile>
+			<activation>
+				<property>
+					<name>spring.profiles.active</name>
+					<value>local</value>
+				</property>
+			</activation>
+		</profile>
+		<profile>
 
-            <id>test</id>
+			<id>test</id>
 
-            <activation>
-                <property>
-                    <name>spring.profiles.active</name>
-                    <value>test</value>
-                </property>
-            </activation>
-        </profile>
-        <profile>
+			<activation>
+				<property>
+					<name>spring.profiles.active</name>
+					<value>test</value>
+				</property>
+			</activation>
+		</profile>
+		<profile>
 
-            <id>prod</id>
-            <properties>
-                <sonar.host.url>https://sonarqube.totvs.io</sonar.host.url>
-                <sonar.login>61c19c071b44a3c2ca82dc428fbe5fd49e0110d3</sonar.login>
-                <sonar.exclusions></sonar.exclusions>
-                <sonar.test.exclusions></sonar.test.exclusions>
-            </properties>
-        </profile>
-    </profiles>
+			<id>prod</id>
+			<properties>
+				<sonar.host.url>https://sonarqube.totvs.io</sonar.host.url>
+				<sonar.login>61c19c071b44a3c2ca82dc428fbe5fd49e0110d3</sonar.login>
+				<sonar.exclusions></sonar.exclusions>
+				<sonar.test.exclusions></sonar.test.exclusions>
+			</properties>
+		</profile>
+	</profiles>
 
 </project>

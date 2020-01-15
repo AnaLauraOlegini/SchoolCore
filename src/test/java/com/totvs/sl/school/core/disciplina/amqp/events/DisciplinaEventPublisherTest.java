@@ -38,17 +38,17 @@ public class DisciplinaEventPublisherTest {
 
 	@Before
 	public void setup() {
-		TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
+		TestUtils.setAuthentication("B56EFB27_13BB_4767_8227_77ABD3761023");
 		Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
 	}
 
 	@Test
 	public void deveCriarDisciplina() {
 
-		var cmd = CriarDisciplinaCommand.of(Fabrica.disciplinaDescricao1,
-		                                    Fabrica.disciplinaSigla1,
-		                                    Fabrica.disciplinaCargaHoraria1,
-		                                    Fabrica.umProfessorParaUmaDisciplina());
+		CriarDisciplinaCommand cmd = CriarDisciplinaCommand.of(Fabrica.disciplinaDescricao1,
+		                                                       Fabrica.disciplinaSigla1,
+		                                                       Fabrica.disciplinaCargaHoraria1,
+		                                                       Fabrica.umProfessorParaUmaDisciplina());
 
 		disciplinaApplicationService.handle(cmd);
 

@@ -14,7 +14,7 @@ import lombok.ToString;
 @ToString
 public final class ProfessorCriadoEvent {
 
-	public static final transient String NAME = "ProfessorCriadoEvent";
+	public static final String NAME = "ProfessorCriadoEvent";
 
 	@NonNull
 	private String professorId;

@@ -10,7 +10,10 @@ import lombok.Getter;
 public final class CriarProfessorCommand {
 
 	private final String nome;
+
 	private final CPF cpf;
+
 	private final String email;
+
 	private final String titulacao;
 }

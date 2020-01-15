@@ -1,5 +1,7 @@
 package com.totvs.sl.school.core.aluno.amqp.events;
 
+import com.totvs.sl.school.core.aluno.domain.model.Aluno;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -8,13 +10,13 @@ import lombok.NonNull;
 import lombok.ToString;
 
 @Data
-@Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
-@ToString
+@Builder
 public final class AlunoCriadoEvent {
 
-	public static final transient String NAME = "AlunoCriadoEvent";
+	public static final String NAME = "AlunoCriadoEvent";
 
 	@NonNull
 	private String alunoId;
@@ -33,4 +35,16 @@ public final class AlunoCriadoEvent {
 
 	private int matricula;
 
+	
+	public static AlunoCriadoEvent from(Aluno aluno) {
+		return AlunoCriadoEvent.builder()
+									 .alunoId(aluno.getId().toString())
+									 .nome(aluno.getNome())
+									 .cpf(aluno.getCpf().getNumero())
+									 .email(aluno.getEmail())
+									 .formaIngresso(aluno.getFormaIngresso())
+									 .matricula(aluno.getMatricula())
+									 .build();
+	}
+	
 }

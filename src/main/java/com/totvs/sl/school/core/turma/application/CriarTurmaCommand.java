@@ -10,7 +10,7 @@ import lombok.Getter;
 
 @Getter
 @Data(staticConstructor = "of")
-public class CriarTurmaCommand {
+public final class CriarTurmaCommand {
 
 	private final String descricao;
 

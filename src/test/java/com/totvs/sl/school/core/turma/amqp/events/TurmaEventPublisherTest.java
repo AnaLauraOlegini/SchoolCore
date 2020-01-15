@@ -38,19 +38,19 @@ public class TurmaEventPublisherTest {
 
 	@Before
 	public void setup() {
-		TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
+		TestUtils.setAuthentication("B56EFB27_13BB_4767_8227_77ABD3761023");
 		Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
 	}
 
 	@Test
 	public void deveCriarTurma() {
 
-		var cmd = CriarTurmaCommand.of(Fabrica.turmaDescricao1,
-		                               Fabrica.turmaAnoLetivo,
-		                               Fabrica.turmaPeriodoLetivo,
-		                               Fabrica.turmaNumeroVagas,
-		                               Fabrica.criarUmaTurmaComDisciplinas(),
-		                               Fabrica.criarUmaTurmaComAlunos());
+		CriarTurmaCommand cmd = CriarTurmaCommand.of(Fabrica.turmaDescricao1,
+		                                             Fabrica.turmaAnoLetivo1,
+		                                             Fabrica.turmaPeriodoLetivo1,
+		                                             Fabrica.turmaNumeroVagas1,
+		                                             Fabrica.criarUmaTurmaComDisciplinas(),
+		                                             Fabrica.criarUmaTurmaComAlunos());
 
 		turmaApplicationService.handle(cmd);
 
@@ -61,9 +61,9 @@ public class TurmaEventPublisherTest {
 
 		assertThat(payLoad.getTurmaId()).isNotBlank();
 		assertThat(payLoad.getDescricao()).isEqualTo(Fabrica.turmaDescricao1);
-		assertThat(payLoad.getAnoLetivo()).isEqualTo(Fabrica.turmaAnoLetivo);
-		assertThat(payLoad.getPeriodoLetivo()).isEqualTo(Fabrica.turmaPeriodoLetivo);
-		assertThat(payLoad.getNumeroVagas()).isEqualTo(Fabrica.turmaNumeroVagas);
+		assertThat(payLoad.getAnoLetivo()).isEqualTo(Fabrica.turmaAnoLetivo1);
+		assertThat(payLoad.getPeriodoLetivo()).isEqualTo(Fabrica.turmaPeriodoLetivo1);
+		assertThat(payLoad.getNumeroVagas()).isEqualTo(Fabrica.turmaNumeroVagas1);
 		assertThat(payLoad.getAlunoId()).size().isEqualTo(3);
 		assertThat(payLoad.getDisciplinaId()).size().isEqualTo(3);
 

@@ -11,7 +11,7 @@ services:
     image: sameersbn/postgresql:10-1
     restart: always
     environment:
-      DB_NAME: school-query,school-core
+      DB_NAME: school-query,school-core,school-query-dev,school-core-dev,school-query-test,school-core-test
       DB_USER: dev-school
       DB_PASS: dev-school
       PG_PASSWORD: totvs@123
@@ -36,16 +36,3 @@ services:
     ports:
       - 15672:15672
       - 5672:5672
-#  cash-rac:
-#image: docker.totvs.io/tnf/rac:1.6
-#ports:
-#- 80:80
-#command: "cd /app && /entry.sh"
-#environment:
-#ApplicationUser: postgres
-#DefaultConnectionString: PostgreSQL
-#Migrator_ConnectionStrings__PostgreSQL: Data Source=cash-postgres;Port=5432;Database=TOTVSRAC;User ID=postgres;password=totvs@123;Unicode=true;
-#ConnectionStrings__PostgreSQL: Data Source=cash-postgres;Port=5432;Database=TOTVSRAC;User ID=postgres;password=totvs@123;Unicode=true;
-#RunMigrator: T
-# Hosts: cash-postgres(ip do docker) abc.rac.totvs.com.br
-#HostUrl: http://*.rac.totvs.com.br/totvs.rac

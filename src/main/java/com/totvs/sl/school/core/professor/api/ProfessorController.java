@@ -39,24 +39,24 @@ public class ProfessorController {
 	@Autowired
 	private ValidatorService validador;
 
-	@ApiOperation(value = "Criar Professor.", httpMethod = "POST", consumes = APPLICATION_JSON_VALUE)
-	@ApiResponses(value = { @ApiResponse(code = 201, message = "Professor criado."),
-	        @ApiResponse(code = 400, message = "O professor não pode ser criado porque está em um estado inválido.") })
+	@ApiOperation(value = "cadastrar um novo Professor.", httpMethod = "POST", consumes = APPLICATION_JSON_VALUE)
+	@ApiResponses(value = { @ApiResponse(code = 201, message = "Professor cadastrado com sucesso."),
+	        @ApiResponse(code = 400, message = "O professor não pode ser cadastrado pois possui alguma informação inválida.") })
 	@PostMapping
-	ResponseEntity<Void> criar(@RequestBody CriarProfessorDto dto) {
+	public ResponseEntity<Void> criar(@RequestBody CriarProfessorDto dto) {
 
 		validador.validate(dto).ifPresent(violations -> { throw new SchoolCriarProfessorException(violations); });
 
-		var cmd = CriarProfessorCommand.of(dto.getNome(), CPF.of(dto.getCpf()), dto.getEmail(), dto.getTitulacao());
+		var cmd = CriarProfessorCommand.of(dto.getNome(), 
+		                                   CPF.of(dto.getCpf()), 
+		                                   dto.getEmail(), 
+		                                   dto.getTitulacao());
 
 		ProfessorId id = service.handle(cmd);
 
-		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-		                                                         .path("/")
-		                                                         .path(id.toString())
-		                                                         .build()
-		                                                         .toUri())
-		                     .build();
+		var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/").path(id.toString()).build().toUri();
+
+		return ResponseEntity.created(uri).build();
 	}
 
 }

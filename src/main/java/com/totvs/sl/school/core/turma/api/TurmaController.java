@@ -62,11 +62,8 @@ public class TurmaController {
 
 		TurmaId id = service.handle(cmd);
 
-		return ResponseEntity.created(ServletUriComponentsBuilder.fromCurrentRequest()
-		                                                         .path("/")
-		                                                         .path(id.toString())
-		                                                         .build()
-		                                                         .toUri())
-		                     .build();
+		var uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/").path(id.toString()).build().toUri();
+
+		return ResponseEntity.created(uri).build();
 	}
 }

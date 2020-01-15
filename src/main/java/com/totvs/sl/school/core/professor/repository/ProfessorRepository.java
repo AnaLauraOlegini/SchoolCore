@@ -20,7 +20,8 @@ public class ProfessorRepository extends CrudAggregateRepository<Professor, Stri
 	public ProfessorRepository(EntityManager em, ObjectMapper mapper) {
 		super(em, mapper.copy());
 	}
-
+	
+	@Override
 	protected String getTableName() {
 		return "professor";
 	}

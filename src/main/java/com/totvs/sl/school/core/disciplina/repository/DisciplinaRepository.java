@@ -17,7 +17,6 @@ public class DisciplinaRepository extends CrudAggregateRepository<Disciplina, St
 		super(em, mapper.copy());
 	}
 
-	@Override
 	protected String getTableName() {
 		return "disciplina";
 	}

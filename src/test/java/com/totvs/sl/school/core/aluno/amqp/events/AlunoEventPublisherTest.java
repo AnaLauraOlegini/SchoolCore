@@ -15,9 +15,8 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.MessageChannel;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.totvs.sl.school.core.SchoolCoreApplication;
+import com.totvs.sl.school.core.Fabrica;
 import com.totvs.sl.school.core.TestUtils;
 import com.totvs.sl.school.core.aluno.application.AlunoApplicationService;
 import com.totvs.sl.school.core.aluno.application.CriarAlunoCommand;
@@ -26,32 +25,32 @@ import com.totvs.sl.school.core.pessoa.domain.CPF;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles(profiles = "test")
-@SpringBootTest(classes = SchoolCoreApplication.class)
-@Transactional
+@SpringBootTest
 public class AlunoEventPublisherTest {
 
 	@MockBean
 	private SchoolExchange processor;
 
+	@MockBean(name = SchoolExchange.OUTPUT)
+	private MessageChannel output;
+
 	@Autowired
 	private AlunoApplicationService alunoApplicationService;
-
+	
 	@Before
 	public void setup() {
-		TestUtils.setAuthentication("b56efb27-13bb-4767-8227-77abd3761023");
+		TestUtils.setAuthentication("B56EFB27_13BB_4767_8227_77ABD3761023");
 		Mockito.when(processor.output()).thenReturn(Mockito.mock(MessageChannel.class));
 	}
 
 	@Test
 	public void deveCriarAluno() {
 
-		var nome = "Sophia Tânia Sueli da Conceição";
-		var cpf = "02131505906";
-		var email = "sophiataniasuelidaconceicao@hotmail.com.br";
-		var formaIngresso = "ENADE";
-		var matricula = 876543210;
-
-		var cmd = CriarAlunoCommand.of(nome, CPF.of(cpf), email, formaIngresso, matricula);
+		CriarAlunoCommand cmd = CriarAlunoCommand.of(Fabrica.alunoNome1,
+		                                             CPF.of(Fabrica.alunoCpf1),
+		                                             Fabrica.alunoEmail1,
+		                                             Fabrica.alunoFormaIngresso1,
+		                                             Fabrica.alunoMatricula1);
 
 		alunoApplicationService.handle(cmd);
 
@@ -61,11 +60,11 @@ public class AlunoEventPublisherTest {
 		AlunoCriadoEvent payLoad = TestUtils.getMessagePayLoad(argument, AlunoCriadoEvent.class);
 
 		assertThat(payLoad.getAlunoId()).isNotBlank();
-		assertThat(payLoad.getNome()).isEqualTo("Sophia Tânia Sueli da Conceição");
-		assertThat(payLoad.getCpf()).isEqualTo("02131505906");
-		assertThat(payLoad.getEmail()).isEqualTo("sophiataniasuelidaconceicao@hotmail.com.br");
-		assertThat(payLoad.getFormaIngresso()).isEqualTo("ENADE");
-		assertThat(payLoad.getMatricula()).isEqualTo(876543210);
+		assertThat(payLoad.getNome()).isEqualTo(Fabrica.alunoNome1);
+		assertThat(payLoad.getCpf()).isEqualTo(Fabrica.alunoCpf1);
+		assertThat(payLoad.getEmail()).isEqualTo(Fabrica.alunoEmail1);
+		assertThat(payLoad.getFormaIngresso()).isEqualTo(Fabrica.alunoFormaIngresso1);
+		assertThat(payLoad.getMatricula()).isEqualTo(Fabrica.alunoMatricula1);
 
 	}
 

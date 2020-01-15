@@ -22,12 +22,17 @@ public class AlunoApplicationService {
 	@Autowired
 	private SchoolPublisher schoolPublisher;
 
+	public AlunoApplicationService(AlunoDomainRepository alunoRepository, SchoolPublisher schoolPublisher) {
+		this.alunoRepository = alunoRepository;
+		this.schoolPublisher = schoolPublisher;
+	}
+
 	public AlunoId handle(CriarAlunoCommand cmd) {
 
 		Aluno aluno = Aluno.builder()
 		                   .id(AlunoId.generate())
-		                   .cpf(cmd.getCpf())
 		                   .nome(cmd.getNome())
+		                   .cpf(cmd.getCpf())
 		                   .email(cmd.getEmail())
 		                   .formaIngresso(cmd.getFormaIngresso())
 		                   .matricula(cmd.getMatricula())
@@ -48,6 +53,5 @@ public class AlunoApplicationService {
 		                                        .build());
 
 		return aluno.getId();
-
 	}
 }

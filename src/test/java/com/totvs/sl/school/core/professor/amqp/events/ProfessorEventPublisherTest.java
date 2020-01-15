@@ -17,6 +17,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.totvs.sl.school.core.Fabrica;
 import com.totvs.sl.school.core.SchoolCoreApplication;
 import com.totvs.sl.school.core.TestUtils;
 import com.totvs.sl.school.core.amqp.SchoolExchange;
@@ -43,25 +44,24 @@ public class ProfessorEventPublisherTest {
 	}
 
 	@Test
-	public void testeMensagemProfessorCriadoEvent() {
+	public void deveCriarProfessor() {
 
-		var cmd = CriarProfessorCommand.of("Patrícia Milena da Cruz",
-		                                   CPF.of("79586911900"),
-		                                   "patriciamilenadacruz_@hotmail.com.br",
-		                                   "Doutora");
+		CriarProfessorCommand cmd = CriarProfessorCommand.of(Fabrica.professorNome1,
+		                                                     CPF.of(Fabrica.professorCpf1),
+		                                                     Fabrica.professorEmail1,
+		                                                     Fabrica.professorTitulacao1);
 
-		var id = professorApplicationService.handle(cmd);
+		professorApplicationService.handle(cmd);
 
 		ArgumentCaptor<Message<?>> argument = ArgumentCaptor.forClass(Message.class);
 		verify(processor.output()).send(argument.capture());
 
 		ProfessorCriadoEvent payLoad = TestUtils.getMessagePayLoad(argument, ProfessorCriadoEvent.class);
 
-		assertThat(payLoad.getProfessorId().toString()).isEqualTo(id.toString());
-		assertThat(payLoad.getNome()).isEqualTo("Patrícia Milena da Cruz");
-		assertThat(payLoad.getCpf().toString()).isEqualTo("79586911900");
-		assertThat(payLoad.getEmail().toString()).isEqualTo("patriciamilenadacruz_@hotmail.com.br");
-		assertThat(payLoad.getTitulacao().toString()).isEqualTo("Doutora");
+		assertThat(payLoad.getNome()).isEqualTo(Fabrica.professorNome1);
+		assertThat(payLoad.getCpf().toString()).isEqualTo(Fabrica.professorCpf1);
+		assertThat(payLoad.getEmail().toString()).isEqualTo(Fabrica.professorEmail1);
+		assertThat(payLoad.getTitulacao().toString()).isEqualTo(Fabrica.professorTitulacao1);
 
 	}
 }
